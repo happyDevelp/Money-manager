@@ -3,6 +3,9 @@
     <style name="Base.Theme.MoneyManager" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#CBDA8403</item> <!--change color of status bar -->
+        <item name="colorAccent">#FFB300</item> <!--change color of status bar -->
+
     </style>
 
     <style name="Theme.MoneyManager" parent="Base.Theme.MoneyManager" />

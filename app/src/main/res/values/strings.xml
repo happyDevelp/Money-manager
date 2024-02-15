@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Money manager</string>
+    <string name="income">Дохід\n0,00</string>
+    <string name="spent">Витрати\n0,00</string>
+    <string name="balance">Баланс\n0,00</string>
+    <string name="menu_transaction">Операції</string>
+    <string name="menu_graph">Графіки</string>
+    <string name="menu_money">Рахунки</string>
+    <string name="menu_more">Більше</string>
 </resources>
