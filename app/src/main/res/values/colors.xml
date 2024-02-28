@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#CBDA8403</color>
+    <color name="item_transaction">#FAF7F1</color>
+    <color name="small_text">#C4000000</color>
+
 </resources>

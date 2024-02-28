@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import com.example.moneymanager.R
 import com.example.moneymanager.databinding.FragmentTransactionBinding
 
@@ -26,7 +28,9 @@ class TransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        binding.floatAddButton.setOnClickListener {
+            findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToAddingFragment())
+        }
 
     }
 

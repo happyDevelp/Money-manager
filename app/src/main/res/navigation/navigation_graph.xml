@@ -9,5 +9,27 @@
         android:id="@+id/transactionFragment"
         android:name="com.example.moneymanager.Transaction.TransactionFragment"
         android:label="fragment_transaction"
-        tools:layout="@layout/fragment_transaction" />
+        tools:layout="@layout/fragment_transaction" >
+        <action
+            android:id="@+id/action_transactionFragment_to_addingFragment"
+            app:destination="@id/addingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addingFragment"
+        android:name="com.example.moneymanager.AddingFragment"
+        android:label="fragment_adding"
+        tools:layout="@layout/fragment_adding" >
+        <action
+            android:id="@+id/action_addingFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spendingFragment"
+        android:name="com.example.moneymanager.SpendingFragment"
+        android:label="SpendingFragment" />
+    <fragment
+        android:id="@+id/incomeFragment"
+        android:name="com.example.moneymanager.IncomeFragment"
+        android:label="fragment_spending"
+        tools:layout="@layout/fragment_spending" />
 </navigation>

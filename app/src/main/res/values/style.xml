@@ -8,4 +8,16 @@
         <item name="android:textColorPrimary">@color/black</item>
     </style>
 
+
+
+    <style name="ButtonActive" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">#FF0000</item>
+        <!-- Задайте будь-які інші атрибути стилю, які ви хочете -->
+    </style>
+
+    <style name="ButtonInactive" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">#808080</item>
+        <!-- Задайте будь-які інші атрибути стилю, які ви хочете -->
+    </style>
+
 </resources>

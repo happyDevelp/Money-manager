@@ -23,11 +23,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="18dp"
-            android:text="calendar"
             android:layout_marginTop="3dp"
-            />
+            android:layout_weight="1"
+            android:text="calendar"
+            android:textSize="18dp" />
 
         <ImageView
             android:layout_width="28dp"
@@ -56,8 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:padding="5dp"
         android:background="@drawable/outline"
+        android:padding="5dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,13 +92,13 @@
         android:layout_marginTop="@dimen/spacing_normal"
 
         android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/item_transaction" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView3"
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -114,6 +113,7 @@
         app:menu="@menu/menu" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/float_add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -128,5 +128,3 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
