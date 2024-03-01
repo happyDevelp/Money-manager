@@ -46,15 +46,7 @@ class AddingFragment : Fragment() {
         coinAnimationListener()
 
 
-        val tabLayoutMediator = TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-                when (position) {
-                    0 -> tab.text = "Дохід"
-                    1 -> tab.text = "Витрати"
-                }
-            }
-
-        binding.viewPager.adapter = MyAdapter(this)
-        tabLayoutMediator.attach()
+        tabLayoutSettings()
 
     }
 
@@ -80,6 +72,19 @@ class AddingFragment : Fragment() {
                 else -> throw RuntimeException("Invalid position: $position")
             }
         }
+    }
+
+    private fun tabLayoutSettings() {
+        val tabLayoutMediator =
+            TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+                when (position) {
+                    0 -> tab.text = "Дохід"
+                    1 -> tab.text = "Витрати"
+                }
+            }
+
+        binding.viewPager.adapter = MyAdapter(this)
+        tabLayoutMediator.attach()
     }
 
 

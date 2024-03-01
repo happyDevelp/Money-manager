@@ -20,11 +20,4 @@ class TransactionViewModel : ViewModel() {
         _navigationStatus.value = null
     }
 
-   /* val tabLayoutMediator = TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-        when (position) {
-            0 -> tab.text = "Дохід"
-            1 -> tab.text = "Витрати"
-        }
-    }*/
-
 }
