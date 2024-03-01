@@ -14,9 +14,6 @@ import com.example.moneymanager.databinding.FragmentTransactionBinding
 
 class TransactionFragment : Fragment() {
     lateinit var binding: FragmentTransactionBinding
-    companion object {
-        fun newInstance() = TransactionFragment()
-    }
 
     private lateinit var viewModel: TransactionViewModel
 
@@ -27,11 +24,24 @@ class TransactionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Get a ViewModel instance
+        viewModel = ViewModelProvider(this).get(TransactionViewModel::class.java)
 
-        binding.floatAddButton.setOnClickListener {
-            findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToAddingFragment())
+        viewModel.navigationStatus.observe(viewLifecycleOwner){
+            it?.let {
+                findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToAddingFragment())
+                viewModel.navigationComplete()
+            }
+
         }
 
+        navigationToAdding()
+
     }
+
+    private fun navigationToAdding() {
+        binding.floatAddButton.setOnClickListener { viewModel.navigationToAdding() }
+    }
+
 
 }

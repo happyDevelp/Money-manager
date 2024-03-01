@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/addingFragment"
-        android:name="com.example.moneymanager.AddingFragment"
+        android:name="com.example.moneymanager.Adding.AddingFragment"
         android:label="fragment_adding"
         tools:layout="@layout/fragment_adding" >
         <action
