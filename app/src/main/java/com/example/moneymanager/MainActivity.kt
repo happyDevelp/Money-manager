@@ -1,5 +1,6 @@
 package com.example.moneymanager
 
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
@@ -10,25 +11,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
-    private lateinit var tabLayout: TabLayout
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-      /*  tabLayout = binding.tabLayout
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigation_graph) as NavHostFragment
-        val navController = navHostFragment.navController
-        val viewPager = binding.viewPager
-
-        TabLayoutMediator(tabLayout, viewPager) {tab, position ->
-            tab.text = tabTitles[position]
-        }
-
-        tabLayout.setupWithViewPager(viewPager)*/
-
-
+        // disable rotate screen
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
     }
 }

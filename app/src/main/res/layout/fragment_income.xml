@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/myScrollView"
@@ -40,41 +39,50 @@
             app:layout_constraintVertical_bias="0.0">
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="100dp"
                 android:layout_height="75dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginBottom="16dp"
                 android:layout_weight="1"
-
                 android:background="@drawable/category_green_background"
-                android:src="@drawable/salary_icon"
+
+                android:src="@drawable/salary_icon_white"
                 tools:ignore="ContentDescription" />
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="100dp"
                 android:layout_height="75dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginBottom="16dp"
                 android:layout_weight="1"
                 android:background="@drawable/category_blue_background"
 
-
-                android:padding="10dp"
-                android:src="@drawable/help_icon"
+                android:padding="5dp"
+                android:src="@drawable/help_icon_white"
                 tools:ignore="ContentDescription" />
 
             <ImageView
-                android:layout_width="60dp"
+                android:layout_width="100dp"
                 android:layout_height="75dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/category_pink_background"
 
-                android:padding="10dp"
-                android:src="@drawable/gift_icon"
+                android:padding="13dp"
+                android:src="@drawable/gift_icon_white"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+
+                android:background="@drawable/category_beige_background"
+
+                android:padding="12dp"
+                android:src="@drawable/other_icon_white"
                 tools:ignore="ContentDescription" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -83,87 +91,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="68dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/salary"
                 android:textAlignment="center"
                 android:textColor="@color/small_text"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="67dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text="@string/help"
                 android:textAlignment="center"
                 android:textColor="@color/small_text"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="77dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/gift"
                 android:textAlignment="center"
                 android:textColor="@color/small_text"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:text="@string/other"
+                android:textAlignment="center"
+                android:textColor="@color/small_text"
+                android:textSize="16sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayoutCompat3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4"
-            app:layout_constraintVertical_bias="0.0">
-
-            <ImageView
-                android:layout_width="108dp"
-                android:layout_height="75dp"
-                android:background="@drawable/category_beige_background"
-
-                android:padding="10dp"
-                android:src="@drawable/another_icon"
-                tools:ignore="ContentDescription" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            android:layout_weight="1"
-            android:text="@string/other"
-            android:textAlignment="center"
-            android:textColor="@color/small_text"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat3" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linearLayoutCompat5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="38sp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutToday"
                 android:layout_width="70dp"
                 android:layout_height="50dp"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -197,6 +186,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutYesterday"
+
                 android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
@@ -251,8 +241,8 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="17dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/the_day_before_yesterday"
                     android:textColor="@color/black"
@@ -263,28 +253,30 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/date_2daysago"
                     app:layout_constraintVertical_bias="0.0" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/calendar_image"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="64dp"
-                android:layout_marginBottom="4dp"
-                android:background="?android:selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                android:src="@drawable/calendar_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutTheDayBeforeYesterday"
-                app:layout_constraintStart_toEndOf="@+id/constraintLayoutTheDayBeforeYesterday"
-                tools:ignore="ContentDescription" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ImageView
+            android:id="@+id/calendar_image"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:layout_marginBottom="10dp"
+
+            android:src="@drawable/calendar_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCompat5"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/test_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="28dp"
+            android:layout_marginEnd="16dp"
             android:text="test"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5"
@@ -297,10 +289,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="52dp"
+            android:fontFamily="@font/alegreya_sans_sc_medium"
             android:text="@string/Comment"
             android:textColor="@color/black"
             android:textSize="19sp"
-            android:fontFamily="@font/alegreya_sans_sc_medium"
 
 
             app:layout_constraintStart_toStartOf="parent"
