@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moneymanager.IncomeFragment
+import com.example.moneymanager.R
 import com.example.moneymanager.SpendingFragment
 import com.example.moneymanager.coinAnimation
 import com.example.moneymanager.databinding.FragmentAddingBinding
@@ -45,7 +46,6 @@ class AddingFragment : Fragment() {
 
         coinAnimationListener()
 
-
         tabLayoutSettings()
 
     }
@@ -78,14 +78,13 @@ class AddingFragment : Fragment() {
         val tabLayoutMediator =
             TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
                 when (position) {
-                    0 -> tab.text = "Дохід"
-                    1 -> tab.text = "Витрати"
+                    0 -> tab.text = getString(R.string.income_adding)
+                    1 -> tab.text = getString(R.string.spent_adding)
                 }
             }
 
         binding.viewPager.adapter = MyAdapter(this)
         tabLayoutMediator.attach()
     }
-
 
 }

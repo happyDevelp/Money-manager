@@ -165,9 +165,10 @@
             android:id="@+id/save_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="100dp"
+            android:layout_marginHorizontal="75dp"
             android:foreground="?android:selectableItemBackgroundBorderless"
             android:text="@string/save"
+            android:layout_marginBottom="8dp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -32,6 +32,7 @@
             android:layout_marginTop="8dp"
 
 
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +46,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/category_green_background"
+                android:padding=""
 
                 android:src="@drawable/salary_icon_white"
                 tools:ignore="ContentDescription" />
@@ -143,6 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="38sp"
+            android:padding="8dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -152,6 +155,8 @@
                 android:id="@+id/constraintLayoutToday"
                 android:layout_width="70dp"
                 android:layout_height="50dp"
+                android:background="@drawable/active_datepicker_background"
+                android:foreground="?android:selectableItemBackgroundBorderless"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -163,21 +168,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
-                    android:text="27.02"
-                    android:textColor="@color/black"
+                    tools:text="03.03"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
+                    android:gravity="center"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
+                    android:id="@+id/textView_today"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/today"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
+                    android:gravity="center"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -186,6 +196,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutYesterday"
+                android:foreground="?android:selectableItemBackgroundBorderless"
 
                 android:layout_width="70dp"
                 android:layout_height="50dp"
@@ -197,9 +208,11 @@
                     android:id="@+id/date_yesterday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="26.02"
+                    tools:text="02.03"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:gravity="center"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -207,10 +220,13 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
+                    android:id="@+id/textView_yesterday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:text="@string/yesterday"
+                    android:gravity="center"
+
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -220,7 +236,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutTheDayBeforeYesterday"
+                android:id="@+id/constraintLayout2daysAgo"
+                android:foreground="?android:selectableItemBackgroundBorderless"
+
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
@@ -231,9 +249,11 @@
                     android:id="@+id/date_2daysago"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="25.02"
+                    tools:text="01.03"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:gravity="center"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -241,12 +261,14 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
+                    android:id="@+id/textView_2daysAgo"
                     android:layout_width="80dp"
                     android:layout_height="17dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/the_day_before_yesterday"
                     android:textColor="@color/black"
                     android:textSize="15sp"
+                    android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.39"
@@ -259,7 +281,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ImageView
-            android:id="@+id/calendar_image"
+            android:id="@+id/calendar_picker_image"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="?android:selectableItemBackgroundBorderless"
@@ -270,17 +292,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCompat5"
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/test_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
-            android:text="test"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5"
-            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textView4"

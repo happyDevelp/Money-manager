@@ -13,7 +13,7 @@ import com.example.moneymanager.R
 import com.example.moneymanager.databinding.FragmentTransactionBinding
 
 class TransactionFragment : Fragment() {
-    lateinit var binding: FragmentTransactionBinding
+    private lateinit var binding: FragmentTransactionBinding
 
     private lateinit var viewModel: TransactionViewModel
 
