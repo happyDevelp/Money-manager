@@ -29,4 +29,6 @@
     <string name="type_of_wallet">Головний</string>
     <string name="select_account">Обрати рахунок</string>
     <string name="textByDatePicker">Вибране</string>
+    <string name="hint_back_arrow">Назад</string>
+    <string name="hint_calendar">Обрати дату</string>
 </resources>

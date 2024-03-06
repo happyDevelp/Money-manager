@@ -4,16 +4,17 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.moneymanager.DB.DataBase
 import com.example.moneymanager.DB.TransactionEntity
+import com.example.moneymanager.Utils.dataViewsAnimationToday
+import com.example.moneymanager.Utils.dataViewsAnimationTwoDaysAgo
+import com.example.moneymanager.Utils.dataViewsAnimationYesterday
 import com.example.moneymanager.databinding.FragmentIncomeBinding
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ class IncomeFragment : Fragment() {
     private lateinit var db: DataBase
     private var calendar = Calendar.getInstance()
     private lateinit var binding: FragmentIncomeBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentIncomeBinding.inflate(layoutInflater)
         return binding.root
@@ -32,19 +34,21 @@ class IncomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        db = DataBase.getInstance(requireContext())
+
         binding.calendarPickerImage.setOnClickListener {
             showDatePicker()
         }
-
-        db = DataBase.getInstance(requireContext())
-
         CoroutineScope(Dispatchers.Main).launch {
+            // test data
             insertTransaction(TransactionEntity(0, "Income", 5, "Default", "5", "No"))
         }
 
+        CategoryContainterClickListener()
         setupCorrectDateOfDateViews()
 
     }
+
 
     private suspend fun insertTransaction(transaction: TransactionEntity)  {
         return withContext(Dispatchers.IO) {
@@ -68,16 +72,16 @@ class IncomeFragment : Fragment() {
 
                         date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                         textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        binding.constraintLayout2daysAgo.background =
+                        binding.twoDaysAgoContainer.background =
                             (ContextCompat.getDrawable(requireContext(), R.drawable.active_datepicker_background))
 
                         dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                         textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                        constraintLayoutToday.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                        todayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
                         dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                         textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                        constraintLayoutYesterday.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                        yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
                     }
 
                 dataViewsAnimationTwoDaysAgo(binding)
@@ -131,12 +135,12 @@ class IncomeFragment : Fragment() {
             SimpleDateFormat("dd.MM", Locale.getDefault()).format(calendar.time)
         binding.date2daysago.text = correct2daysAgoDateFormat
 
-        changeColorByClicking()
+        dateContainerClickListener()
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun changeColorByClicking() {
-        binding.constraintLayoutToday.setOnClickListener {
+    private fun dateContainerClickListener() {
+        binding.todayContainer.setOnClickListener {
             binding.apply {
                 dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -144,17 +148,17 @@ class IncomeFragment : Fragment() {
 
                 dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                constraintLayoutYesterday.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
                 date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                constraintLayout2daysAgo.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
             }
 
             dataViewsAnimationToday(binding)
         }
 
-        binding.constraintLayoutYesterday.setOnClickListener {
+        binding.yesterdayContainer.setOnClickListener {
             binding.apply {
                 dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -162,17 +166,17 @@ class IncomeFragment : Fragment() {
 
                 dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                constraintLayoutToday.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                todayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
                 date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                constraintLayout2daysAgo.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
             }
 
             dataViewsAnimationYesterday(binding)
         }
 
-        binding.constraintLayout2daysAgo.setOnClickListener {
+        binding.twoDaysAgoContainer.setOnClickListener {
             binding.apply {
                 date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -180,15 +184,90 @@ class IncomeFragment : Fragment() {
 
                 dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                constraintLayoutToday.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                todayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
                 dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                constraintLayoutYesterday.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
             }
 
             dataViewsAnimationTwoDaysAgo(binding)
         }
+    }
 
+    private fun CategoryContainterClickListener() {
+        binding.salaryContainer.setOnClickListener {
+            binding.apply {
+                salaryContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.category_green_active_background)
+                helpContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                giftContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                otherContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+
+                salaryImv.background.alpha = 0
+                helpImv.background.alpha = 255
+                giftImv.background.alpha = 255
+                otherImv.background.alpha = 255
+            }
+        }
+
+        binding.helpContainer.setOnClickListener {
+            binding.apply {
+                salaryContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                helpContainer.background = ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.category_blue_active_background
+                )
+                giftContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                otherContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+
+                salaryImv.background.alpha = 255
+                helpImv.background.alpha = 0
+                giftImv.background.alpha = 255
+                otherImv.background.alpha = 255
+            }
+        }
+
+        binding.giftContainer.setOnClickListener {
+            binding.apply {
+                salaryContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                helpContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                giftContainer.background = ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.category_pink_active_background
+                )
+                otherContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+
+                salaryImv.background.alpha = 255
+                helpImv.background.alpha = 255
+                giftImv.background.alpha = 0
+                otherImv.background.alpha = 255
+            }
+        }
+
+        binding.otherContainer.setOnClickListener {
+            binding.apply {
+                salaryContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                helpContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                giftContainer.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                otherContainer.background = ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.category_beige_active_background
+                )
+
+                salaryImv.background.alpha = 255
+                helpImv.background.alpha = 255
+                giftImv.background.alpha = 255
+                otherImv.background.alpha = 0
+            }
+        }
     }
 }

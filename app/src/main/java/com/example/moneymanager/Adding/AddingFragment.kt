@@ -1,21 +1,25 @@
 package com.example.moneymanager.Adding
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moneymanager.IncomeFragment
 import com.example.moneymanager.R
 import com.example.moneymanager.SpendingFragment
-import com.example.moneymanager.coinAnimation
+import com.example.moneymanager.Utils.coinAnimation1
+import com.example.moneymanager.Utils.coinAnimation2
+import com.example.moneymanager.Utils.coinAnimation3
+import com.example.moneymanager.Utils.coinAnimationDown
+import com.example.moneymanager.Utils.coinAnimationUp
 import com.example.moneymanager.databinding.FragmentAddingBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import java.lang.RuntimeException
 
 
 class AddingFragment : Fragment() {
@@ -42,11 +46,9 @@ class AddingFragment : Fragment() {
         //disable user swiping between fragments in viewPager2
         binding.viewPager.isUserInputEnabled = false
 
-        navigationToTransaction()
-
-        coinAnimationListener()
-
         tabLayoutSettings()
+        coinAnimationListener()
+        navigationToTransaction()
 
     }
 
@@ -55,9 +57,24 @@ class AddingFragment : Fragment() {
         binding.saveButton.setOnClickListener { viewModel.navigationToTransaction() }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun coinAnimationListener() {
-        binding.txtAddTransaction.setOnClickListener { coinAnimation(binding) }
-        binding.coinIcon.setOnClickListener { coinAnimation(binding) }
+        binding.txtAddTransaction.setOnClickListener {
+            val rand = (0..2).random()
+            when (rand) {
+               0 -> coinAnimation1(binding)
+               1 -> coinAnimation2(binding)
+               else -> coinAnimation3(binding)
+           }
+        }
+
+        binding.coinIcon.setOnTouchListener { v, event ->
+            when(event.action) {
+                MotionEvent.ACTION_DOWN -> coinAnimationUp(binding)
+                MotionEvent.ACTION_UP -> coinAnimationDown(binding)
+            }
+            true
+        }
     }
 
     class MyAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {

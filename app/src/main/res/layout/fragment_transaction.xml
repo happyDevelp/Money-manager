@@ -25,15 +25,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:layout_weight="1"
-            android:text="calendar"
-            android:textSize="18dp" />
+            android:text="test_calendar"
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/favorite_icon" />
-
+            android:src="@drawable/favorite_icon"
+            tools:ignore="ContentDescription" />
 
         <androidx.appcompat.widget.SearchView
             android:layout_width="30dp"
@@ -119,12 +119,14 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="60dp"
         android:backgroundTint="#FB8C00"
+        android:importantForAccessibility="no"
         android:src="@drawable/plus_icon"
         app:layout_constraintBottom_toBottomOf="parent"
+
+
         app:layout_constraintEnd_toEndOf="parent"
-
-
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
