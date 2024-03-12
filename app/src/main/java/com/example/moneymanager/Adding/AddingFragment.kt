@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.moneymanager.IncomeFragment
+import com.example.moneymanager.DB.DataBase
+import com.example.moneymanager.Income.IncomeFragment
 import com.example.moneymanager.R
-import com.example.moneymanager.SpendingFragment
+import com.example.moneymanager.Spending.SpendingFragment
 import com.example.moneymanager.Utils.coinAnimation1
 import com.example.moneymanager.Utils.coinAnimation2
 import com.example.moneymanager.Utils.coinAnimation3
@@ -25,6 +26,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 class AddingFragment : Fragment() {
     private lateinit var binding: FragmentAddingBinding
     private lateinit var viewModel: AddingViewModel
+    private lateinit var db: DataBase
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAddingBinding.inflate(layoutInflater)
@@ -35,6 +38,10 @@ class AddingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(AddingViewModel::class.java)
+
+        db = DataBase.getInstance(requireContext())
+
+
 
         viewModel.navigationStatus.observe(viewLifecycleOwner){
             if (it == true){
@@ -51,6 +58,8 @@ class AddingFragment : Fragment() {
         navigationToTransaction()
 
     }
+
+
 
     private fun navigationToTransaction() {
         binding.backArrow.setOnClickListener { viewModel.navigationToTransaction() }

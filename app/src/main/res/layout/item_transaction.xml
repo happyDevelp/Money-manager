@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="6dp"
-    app:cardCornerRadius="4dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="1dp"
     android:backgroundTint="@color/item_transaction"
-    >
+    app:cardCornerRadius="4dp"
+    app:cardElevation="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <TextView
             android:id="@+id/transaction_type"
@@ -23,7 +22,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="@dimen/spacing_normal"
             android:layout_marginBottom="4dp"
-            android:text="💰Зарплата"
+            android:text="@string/income_adding"
 
 
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,48 +35,42 @@
             android:id="@+id/transaction_method"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-
+            android:layout_marginStart="70dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="@dimen/spacing_normal"
-            android:text="картка"
-            android:textSize="12dp"
+            android:textSize="12sp"
 
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/transaction_type"
-            app:layout_constraintTop_toBottomOf="@id/transaction_user_describe" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transaction_category"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="картка" />
 
         <TextView
-            android:id="@+id/transaction_user_describe"
+            android:id="@+id/transaction_category"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="2dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
-            android:text="Отримав зарплату"
+            android:text="@string/salary_item"
 
-            android:textSize="13dp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/transaction_type"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.2" />
 
         <TextView
-            android:id="@+id/transaction_count"
+            android:id="@+id/transaction_amount"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-
-            android:text="₴ 5 000,00"
-            android:textSize="13dp"
-
+            tools:text="₴ 5 000,00"
+            android:textSize="13sp"
 
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
