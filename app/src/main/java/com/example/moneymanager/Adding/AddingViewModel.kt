@@ -1,10 +1,14 @@
 package com.example.moneymanager.Adding
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.moneymanager.DB.DataBase
 
-class AddingViewModel: ViewModel() {
+class AddingViewModel(application: Application): AndroidViewModel(application) {
+
+    var database: DataBase = DataBase.getInstance(application)
 
     private val _navigationStatus = MutableLiveData<Boolean?>()
 

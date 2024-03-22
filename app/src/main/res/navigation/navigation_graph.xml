@@ -25,11 +25,11 @@
     </fragment>
     <fragment
         android:id="@+id/spendingFragment"
-        android:name="com.example.moneymanager.SpendingFragment"
+        android:name="com.example.moneymanager.Spending.SpendingFragment"
         android:label="SpendingFragment" />
     <fragment
         android:id="@+id/incomeFragment"
-        android:name="com.example.moneymanager.IncomeFragment"
+        android:name="com.example.moneymanager.Income.IncomeFragment"
         android:label="fragment_spending"
         tools:layout="@layout/fragment_spending" />
 </navigation>

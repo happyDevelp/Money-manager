@@ -31,4 +31,8 @@
     <string name="textByDatePicker">Вибране</string>
     <string name="hint_back_arrow">Назад</string>
     <string name="hint_calendar">Обрати дату</string>
+    <string name="salary_item">💰Зарплата</string>
+    <string name="UAH">"₴ "</string>
+    <string name="amount_transaction">₴ %1$s</string>
+    <string name="type_transaction">💰%1$s</string>
 </resources>

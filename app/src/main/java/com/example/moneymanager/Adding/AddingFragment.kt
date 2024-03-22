@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.moneymanager.IncomeFragment
+import com.example.moneymanager.Income.IncomeFragment
 import com.example.moneymanager.R
-import com.example.moneymanager.SpendingFragment
+import com.example.moneymanager.Spending.SpendingFragment
 import com.example.moneymanager.Utils.coinAnimation1
 import com.example.moneymanager.Utils.coinAnimation2
 import com.example.moneymanager.Utils.coinAnimation3
@@ -26,6 +26,7 @@ class AddingFragment : Fragment() {
     private lateinit var binding: FragmentAddingBinding
     private lateinit var viewModel: AddingViewModel
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAddingBinding.inflate(layoutInflater)
         return binding.root
@@ -35,6 +36,9 @@ class AddingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(AddingViewModel::class.java)
+
+        var database = viewModel.database
+
 
         viewModel.navigationStatus.observe(viewLifecycleOwner){
             if (it == true){
@@ -50,7 +54,14 @@ class AddingFragment : Fragment() {
         coinAnimationListener()
         navigationToTransaction()
 
+/*        binding.saveButton.setOnClickListener {
+
+            val transaction = TransactionEntity()
+        }*/
+
     }
+
+
 
     private fun navigationToTransaction() {
         binding.backArrow.setOnClickListener { viewModel.navigationToTransaction() }
