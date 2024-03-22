@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "transaction_table")
 data class TransactionEntity (
+
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 
     @ColumnInfo(name = "transaction_category") val transactionCategory: String, // Income or Spend

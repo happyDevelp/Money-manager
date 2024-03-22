@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.moneymanager.DB.DataBase
 import com.example.moneymanager.DB.TransactionEntity
 import com.example.moneymanager.R
@@ -16,7 +17,6 @@ import com.example.moneymanager.Utils.dataViewsAnimationToday
 import com.example.moneymanager.Utils.dataViewsAnimationTwoDaysAgo
 import com.example.moneymanager.Utils.dataViewsAnimationYesterday
 import com.example.moneymanager.databinding.FragmentIncomeBinding
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -40,13 +40,13 @@ class IncomeFragment : Fragment() {
         binding.calendarPickerImage.setOnClickListener {
             showDatePicker()
         }
-
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             // test of working DB
             insertTransaction (TransactionEntity
                 (0, "Income", "salary", 500, "Card", "12.03.24", "")
             )
         }
+
 
         CategoryContainterClickListener()
         setupCorrectDateOfDateViews()
@@ -162,34 +162,43 @@ class IncomeFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun dateContainerClickListener() {
-        binding.todayContainer.setOnClickListener {
-            binding.apply {
-                dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                it.background = (ContextCompat.getDrawable(requireContext(),
-                    R.drawable.active_datepicker_background
-                ))
 
-                dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(),
-                    R.color.black
-                ))
-                yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(),
-                    R.color.white
-                ))
+        todaySelected()
+        yesterdaySelected()
+        twoDaysAgoSelected()
+    }
 
-                date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(),
-                    R.color.black
-                ))
-                twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(),
-                    R.color.white
-                ))
-            }
+    fun todaySelected() {binding.todayContainer.setOnClickListener {
+        binding.apply {
+            dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            it.background = (ContextCompat.getDrawable(requireContext(),
+                R.drawable.active_datepicker_background
+            ))
 
-            dataViewsAnimationToday(binding)
+            dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(),
+                R.color.black
+            ))
+            yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(),
+                R.color.white
+            ))
+
+            date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(),
+                R.color.black
+            ))
+            twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(),
+                R.color.white
+            ))
         }
 
+        dataViewsAnimationToday(binding)
+    }
+
+    }
+
+    private fun yesterdaySelected() {
         binding.yesterdayContainer.setOnClickListener {
             binding.apply {
                 dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -217,7 +226,9 @@ class IncomeFragment : Fragment() {
 
             dataViewsAnimationYesterday(binding)
         }
+    }
 
+    private fun twoDaysAgoSelected() {
         binding.twoDaysAgoContainer.setOnClickListener {
             binding.apply {
                 date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -330,4 +341,6 @@ class IncomeFragment : Fragment() {
             }
         }
     }
+
+
 }

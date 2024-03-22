@@ -1,41 +1,32 @@
 package com.example.moneymanager.TransactionAdapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneymanager.DB.TransactionEntity
 import com.example.moneymanager.R
+import com.example.moneymanager.databinding.ItemTransactionBinding
 
-class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.ViewHolder>(DiffCallBack()) {
+class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.TransactionViewHolder>(DiffCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_transaction, parent, false)
-        return ViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder =
+        TransactionViewHolder(ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val currentItem = getItem(position)
+
         holder.bind(currentItem)
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val transactionType: TextView = itemView.findViewById(R.id.transaction_type)
-        private val transactionCategory: TextView = itemView.findViewById(R.id.transaction_category)
-        private val transactionMethod: TextView = itemView.findViewById(R.id.transaction_method)
-        private val transactionAmount: TextView = itemView.findViewById(R.id.transaction_amount)
-
-
+    class TransactionViewHolder(private val binding: ItemTransactionBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionEntity: TransactionEntity) {
-            transactionType.text = itemView.resources.getString(R.string.type_transaction, transactionEntity.transactionType)
-            transactionCategory.text = transactionEntity.transactionCategory
-            transactionMethod.text = transactionEntity.wallet
-            transactionAmount.text = itemView.resources.getString(R.string.amount_transaction, transactionEntity.amount.toString())
-
+            binding.transactionType.text = itemView.resources.getString(R.string.type_transaction, transactionEntity.transactionType)
+            binding.transactionCategory.text = transactionEntity.transactionCategory
+            binding.transactionMethod.text = transactionEntity.wallet
+            binding.transactionAmount.text = itemView.resources.getString(R.string.amount_transaction, transactionEntity.amount.toString())
         }
     }
 
@@ -43,7 +34,7 @@ class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.View
 
         override fun areItemsTheSame(oldItem: TransactionEntity, newItem: TransactionEntity): Boolean = oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: TransactionEntity, newItem: TransactionEntity): Boolean = oldItem == newItem
+        override fun areContentsTheSame(oldItem: TransactionEntity, newItem: TransactionEntity): Boolean = oldItem.id == newItem.id
     }
 
 }

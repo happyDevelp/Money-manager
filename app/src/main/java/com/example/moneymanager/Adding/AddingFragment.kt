@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.moneymanager.DB.DataBase
 import com.example.moneymanager.Income.IncomeFragment
 import com.example.moneymanager.R
 import com.example.moneymanager.Spending.SpendingFragment
@@ -26,7 +25,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 class AddingFragment : Fragment() {
     private lateinit var binding: FragmentAddingBinding
     private lateinit var viewModel: AddingViewModel
-    private lateinit var db: DataBase
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,8 +37,7 @@ class AddingFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(AddingViewModel::class.java)
 
-        db = DataBase.getInstance(requireContext())
-
+        var database = viewModel.database
 
 
         viewModel.navigationStatus.observe(viewLifecycleOwner){
@@ -56,6 +53,11 @@ class AddingFragment : Fragment() {
         tabLayoutSettings()
         coinAnimationListener()
         navigationToTransaction()
+
+/*        binding.saveButton.setOnClickListener {
+
+            val transaction = TransactionEntity()
+        }*/
 
     }
 
