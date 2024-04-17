@@ -5,6 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.moneymanager.DB.DataBase
+import com.example.moneymanager.DB.TransactionEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AddingViewModel(application: Application): AndroidViewModel(application) {
 
@@ -21,6 +24,12 @@ class AddingViewModel(application: Application): AndroidViewModel(application) {
 
     fun navigationComplete(){
         _navigationStatus.value = false
+    }
+
+    suspend fun pushTransaction(transaction: TransactionEntity) {
+        return withContext(Dispatchers.IO) {
+            database.DAO.insertTransaction(transaction)
+        }
     }
 
 

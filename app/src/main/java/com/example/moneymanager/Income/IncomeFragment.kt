@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.example.moneymanager.DB.DataBase
 import com.example.moneymanager.DB.TransactionEntity
 import com.example.moneymanager.R
@@ -18,7 +17,6 @@ import com.example.moneymanager.Utils.dataViewsAnimationTwoDaysAgo
 import com.example.moneymanager.Utils.dataViewsAnimationYesterday
 import com.example.moneymanager.databinding.FragmentIncomeBinding
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -26,7 +24,7 @@ import java.util.Locale
 class IncomeFragment : Fragment() {
     private lateinit var db: DataBase
     private var calendar = Calendar.getInstance()
-    private lateinit var binding: FragmentIncomeBinding
+    lateinit var binding: FragmentIncomeBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentIncomeBinding.inflate(layoutInflater)
@@ -40,12 +38,12 @@ class IncomeFragment : Fragment() {
         binding.calendarPickerImage.setOnClickListener {
             showDatePicker()
         }
-        lifecycleScope.launch {
+/*        lifecycleScope.launch {
             // test of working DB
             insertTransaction (TransactionEntity
                 (0, "Income", "salary", 500, "Card", "12.03.24", "")
             )
-        }
+        }*/
 
 
         CategoryContainterClickListener()
@@ -262,8 +260,7 @@ class IncomeFragment : Fragment() {
         binding.salaryContainer.setOnClickListener {
             binding.apply {
                 salaryContainer.background = ContextCompat.getDrawable(requireContext(),
-                    R.drawable.category_green_active_background
-                )
+                    R.drawable.category_green_active_background )
                 helpContainer.background = ContextCompat.getDrawable(requireContext(),
                     R.drawable.transparent_layout
                 )
@@ -278,6 +275,10 @@ class IncomeFragment : Fragment() {
                 helpImv.background.alpha = 255
                 giftImv.background.alpha = 255
                 otherImv.background.alpha = 255
+
+                UtilManager.isSalaryClicked = true
+                UtilManager.isHelpClicked = false
+                UtilManager.isGiftClicked = false
             }
         }
 
@@ -298,6 +299,10 @@ class IncomeFragment : Fragment() {
                 helpImv.background.alpha = 0
                 giftImv.background.alpha = 255
                 otherImv.background.alpha = 255
+
+                UtilManager.isSalaryClicked = false
+                UtilManager.isHelpClicked = true
+                UtilManager.isGiftClicked = false
             }
         }
 
@@ -318,6 +323,10 @@ class IncomeFragment : Fragment() {
                 helpImv.background.alpha = 255
                 giftImv.background.alpha = 0
                 otherImv.background.alpha = 255
+
+                UtilManager.isSalaryClicked = false
+                UtilManager.isHelpClicked = false
+                UtilManager.isGiftClicked = true
             }
         }
 
@@ -338,9 +347,21 @@ class IncomeFragment : Fragment() {
                 helpImv.background.alpha = 255
                 giftImv.background.alpha = 255
                 otherImv.background.alpha = 0
+
+                UtilManager.isSalaryClicked = false
+                UtilManager.isHelpClicked = false
+                UtilManager.isGiftClicked = false
             }
         }
     }
 
 
+}
+
+object UtilManager {
+    var isSalaryClicked: Boolean = false
+    var isHelpClicked: Boolean = false
+    var isGiftClicked: Boolean = false
+
+    var comment: String = "s"
 }

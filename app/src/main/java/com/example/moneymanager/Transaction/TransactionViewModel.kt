@@ -4,35 +4,51 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.moneymanager.DB.DataBase
+import androidx.lifecycle.viewModelScope
+import com.example.moneymanager.DB.DAO
 import com.example.moneymanager.DB.TransactionEntity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TransactionViewModel(application: Application) : AndroidViewModel(application) {
+class TransactionViewModel(val database: DAO, application: Application) : AndroidViewModel(application) {
 
-    val database = DataBase.getInstance(application)
+    /*val database = DataBase.getInstance(application.applicationContext)*/
 
+    private val _transactions = MutableLiveData<List<TransactionEntity>>()
+    val transactions: LiveData<List<TransactionEntity>>
+        get() = _transactions
+
+    fun fetchEntities() {
+        viewModelScope.launch {
+            _transactions.value = withContext(Dispatchers.IO) {
+                database.getAllTransactions().value
+            }
+        }
+    }
+
+    init {
+        fetchEntities()
+    }
 
     private val _navigationStatus = MutableLiveData<Boolean?>()
 
-    val navigationStatus: MutableLiveData<Boolean?>
-        get() = _navigationStatus
+    val navigationStatus = _navigationStatus
+
+
 
     suspend fun getAllTransactions(): LiveData<List<TransactionEntity>> {
         return withContext(Dispatchers.IO) {
-            database.DAO.getAllTransactions()
+            database.getAllTransactions()
         }
     }
 
 
     suspend fun pushTransaction(transaction: TransactionEntity) {
         return withContext(Dispatchers.IO) {
-            database.DAO.insertTransaction(transaction)
+            database.insertTransaction(transaction)
         }
     }
-
-
 
 
     fun navigationToAdding() {

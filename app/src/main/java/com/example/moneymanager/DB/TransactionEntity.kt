@@ -9,11 +9,11 @@ data class TransactionEntity (
 
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 
-    @ColumnInfo(name = "transaction_category") val transactionCategory: String, // Income or Spend
-
-    @ColumnInfo(name = "transaction_type") val transactionType: String, // Salary, help, gift...
-
     @ColumnInfo(name = "amount") val amount: Int, // Transaction amount
+
+    @ColumnInfo(name = "transaction_type") val transactionType: String, // Income or Spend
+
+    @ColumnInfo(name = "transaction_category") val transactionCategory: String, // Salary, help, gift...
 
     @ColumnInfo(name = "wallet") val wallet: String, // choosing a wallet
 

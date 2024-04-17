@@ -70,13 +70,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
-            android:id="@+id/count_editText"
+            android:id="@+id/amount_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="#592811"
             android:ems="6"
-            android:inputType="text"
+            android:inputType="numberDecimal"
             android:minHeight="48dp"
             android:text="@string/zero_defaultvalue_adding"
 
@@ -100,8 +100,8 @@
             android:text="@string/currency"
             android:textColor="#47280C"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/count_editText"
-            app:layout_constraintStart_toEndOf="@+id/count_editText"
+            app:layout_constraintBottom_toBottomOf="@+id/amount_editText"
+            app:layout_constraintStart_toEndOf="@+id/amount_editText"
             app:layout_constraintTop_toBottomOf="@id/topPanel" />
 
         <TextView
@@ -114,7 +114,7 @@
             android:textColor="@color/small_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/count_editText" />
+            app:layout_constraintTop_toBottomOf="@+id/amount_editText" />
 
         <TextView
             android:id="@+id/typeOfWallet"

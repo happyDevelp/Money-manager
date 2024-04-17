@@ -23,10 +23,10 @@ class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.Tran
 
     class TransactionViewHolder(private val binding: ItemTransactionBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionEntity: TransactionEntity) {
+            binding.transactionAmount.text = itemView.resources.getString(R.string.amount_transaction, transactionEntity.amount.toString())
+            binding.transactionMethod.text = transactionEntity.wallet
             binding.transactionType.text = itemView.resources.getString(R.string.type_transaction, transactionEntity.transactionType)
             binding.transactionCategory.text = transactionEntity.transactionCategory
-            binding.transactionMethod.text = transactionEntity.wallet
-            binding.transactionAmount.text = itemView.resources.getString(R.string.amount_transaction, transactionEntity.amount.toString())
         }
     }
 

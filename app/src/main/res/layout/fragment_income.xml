@@ -318,7 +318,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/comment_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -343,7 +343,7 @@
 
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText">
+            app:layout_constraintTop_toBottomOf="@+id/comment_et">
 
             <TextView
                 android:id="@+id/textView5"

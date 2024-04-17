@@ -8,9 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.moneymanager.DB.TransactionEntity
 import com.example.moneymanager.Income.IncomeFragment
+import com.example.moneymanager.Income.UtilManager
 import com.example.moneymanager.R
 import com.example.moneymanager.Spending.SpendingFragment
 import com.example.moneymanager.Utils.coinAnimation1
@@ -20,12 +23,13 @@ import com.example.moneymanager.Utils.coinAnimationDown
 import com.example.moneymanager.Utils.coinAnimationUp
 import com.example.moneymanager.databinding.FragmentAddingBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.launch
+import java.util.Calendar
 
 
 class AddingFragment : Fragment() {
     private lateinit var binding: FragmentAddingBinding
     private lateinit var viewModel: AddingViewModel
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAddingBinding.inflate(layoutInflater)
@@ -36,17 +40,6 @@ class AddingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(AddingViewModel::class.java)
-
-        var database = viewModel.database
-
-
-        viewModel.navigationStatus.observe(viewLifecycleOwner){
-            if (it == true){
-                findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())
-                viewModel.navigationComplete()
-            }
-
-        }
         //disable user swiping between fragments in viewPager2
         binding.viewPager.isUserInputEnabled = false
 
@@ -54,10 +47,43 @@ class AddingFragment : Fragment() {
         coinAnimationListener()
         navigationToTransaction()
 
-/*        binding.saveButton.setOnClickListener {
+        viewModel.navigationStatus.observe(viewLifecycleOwner){
+            if (it == true){
+                findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())
+                viewModel.navigationComplete()
+            }
+        }
 
-            val transaction = TransactionEntity()
+        var comment = ""
+/*        setFragmentResultListener("request_comment") { key, bundle ->
+            comment = bundle.getString()
+
         }*/
+
+        binding.saveButton.setOnClickListener {
+            lifecycleScope.launch {
+
+                val amount = binding.amountEditText.text.toString().toInt()
+                val type = if (binding.viewPager.currentItem == 0) getString(R.string.income) else getString(R.string.spent)
+
+
+                val category = when {
+                    UtilManager.isSalaryClicked -> "Salary"
+                    UtilManager.isHelpClicked -> "Help"
+                    UtilManager.isGiftClicked-> "Gift"
+                    else -> "Other"
+                }
+
+                val wallet = "main"
+                val dateOfTransaction = Calendar.getInstance().time
+                val comment = "hi"
+
+                viewModel.pushTransaction(TransactionEntity(
+                        0, amount, type, category, wallet, dateOfTransaction.toString(), comment
+                    )
+                )
+            }
+        }
 
     }
 
