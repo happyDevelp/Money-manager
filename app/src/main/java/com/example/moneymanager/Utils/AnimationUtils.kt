@@ -1,7 +1,6 @@
 package com.example.moneymanager.Utils
 
 import com.example.moneymanager.databinding.FragmentAddingBinding
-import com.example.moneymanager.databinding.FragmentIncomeBinding
 
 /** ANIMATIONS **/
 fun coinAnimation1(binding: FragmentAddingBinding) {
@@ -76,7 +75,7 @@ fun coinAnimation3(binding: FragmentAddingBinding) {
 }
 
 fun coinAnimationUp(binding: FragmentAddingBinding) {
-    val firstAnimation = binding.coinIcon.animate().apply {
+    binding.coinIcon.animate().apply {
         duration = 150
         scaleX(1.25f)  // x-axis scaling
         scaleY(1.25f)  // y-axis scaling
@@ -84,7 +83,7 @@ fun coinAnimationUp(binding: FragmentAddingBinding) {
 }
 
 fun coinAnimationDown(binding: FragmentAddingBinding) {
-    val firstAnimation = binding.coinIcon.animate().apply {
+    binding.coinIcon.animate().apply {
         duration = 150
         scaleX(1.0f)  // x-axis scaling
         scaleY(1.0f)  // y-axis scaling
@@ -94,12 +93,12 @@ fun coinAnimationDown(binding: FragmentAddingBinding) {
 
 }
 
-fun dataViewsAnimationToday(binding: FragmentIncomeBinding) {
-    val firstAnimation = binding.todayContainer.animate().apply {
+fun dataViewsAnimationToday(binding: FragmentAddingBinding) {
+    binding.todayContainer.animate()?.apply {
         duration = 100
         scaleX(1.05f)  // масштабування по осі X
         scaleY(1.05f)  // масштабування по осі Y
-    }.withEndAction {
+    }?.withEndAction {
         binding.todayContainer.animate().apply {
             duration = 100
             scaleX(1.0f)
@@ -108,12 +107,12 @@ fun dataViewsAnimationToday(binding: FragmentIncomeBinding) {
     }
 }
 
-fun dataViewsAnimationYesterday(binding: FragmentIncomeBinding) {
-    val firstAnimation = binding.yesterdayContainer.animate().apply {
+fun dataViewsAnimationYesterday(binding: FragmentAddingBinding) {
+    binding.yesterdayContainer.animate()?.apply {
         duration = 100
         scaleX(1.05f)  // масштабування по осі X
         scaleY(1.05f)  // масштабування по осі Y
-    }.withEndAction {
+    }?.withEndAction {
         binding.yesterdayContainer.animate().apply {
             duration = 100
             scaleX(1.0f)
@@ -122,12 +121,12 @@ fun dataViewsAnimationYesterday(binding: FragmentIncomeBinding) {
     }
 }
 
-fun dataViewsAnimationTwoDaysAgo(binding: FragmentIncomeBinding) {
-    val firstAnimation = binding.twoDaysAgoContainer.animate().apply {
+fun dataViewsAnimationTwoDaysAgo(binding: FragmentAddingBinding) {
+    binding.twoDaysAgoContainer.animate()?.apply {
         duration = 100
         scaleX(1.05f)  // масштабування по осі X
         scaleY(1.05f)  // масштабування по осі Y
-    }.withEndAction {
+    }?.withEndAction {
         binding.twoDaysAgoContainer.animate().apply {
             duration = 100
             scaleX(1.0f)

@@ -11,9 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TransactionViewModel(val database: DAO, application: Application) : AndroidViewModel(application) {
-
-    /*val database = DataBase.getInstance(application.applicationContext)*/
+class TransactionViewModel(private val database: DAO, application: Application) : AndroidViewModel(application) {
 
     private val _transactions = MutableLiveData<List<TransactionEntity>>()
     val transactions: LiveData<List<TransactionEntity>>

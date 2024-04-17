@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,8 +17,6 @@ import kotlinx.coroutines.launch
 
 class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding
-
-
     // Get a ViewModel instance
     /*private val viewModel: TransactionViewModel by viewModels {
         TransactionViewModelFactory(requireActivity().application)
@@ -48,6 +45,7 @@ class TransactionFragment : Fragment() {
 
         val adapter = TransactionAdapter()
         binding.recycleView.adapter = adapter
+
         binding.recycleView.layoutManager = LinearLayoutManager(requireContext())
 
         //Підписка
@@ -58,12 +56,13 @@ class TransactionFragment : Fragment() {
 
 
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    val transactionsList = viewModel.getAllTransactions()
-                    transactionsList.observe(viewLifecycleOwner) {
-                        adapter.submitList(it)
-                    }
-                }
+        CoroutineScope(Dispatchers.Main).launch {
+            val transactionsList = viewModel.getAllTransactions()
+            transactionsList.observe(viewLifecycleOwner) {
+                adapter.submitList(it)
+            }
+        }
+
 
 
         binding.testAdd.setOnClickListener {
@@ -75,18 +74,11 @@ class TransactionFragment : Fragment() {
                 findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToAddingFragment())
                 viewModel.navigationComplete()
             }
-
         }
-
-
 
        /* navigationToAdding()*/
         binding.floatAddButton.setOnClickListener { viewModel.navigationToAdding() }
 
     }
-
-
-    /*private fun navigationToAdding() {  }*/
-
 
 }
