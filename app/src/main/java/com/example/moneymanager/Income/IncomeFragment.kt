@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.example.moneymanager.DB.DataBase
-import com.example.moneymanager.DB.TransactionEntity
+import com.example.moneymanager.Income.UtilManager.amountIsNotNull
+import com.example.moneymanager.Income.UtilManager.buttonIsClickable
+import com.example.moneymanager.Income.UtilManager.categoryIsChanged
 import com.example.moneymanager.R
 import com.example.moneymanager.databinding.FragmentIncomeBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class IncomeFragment : Fragment() {
     private lateinit var db: DataBase
-
     lateinit var binding: FragmentIncomeBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -31,12 +31,6 @@ class IncomeFragment : Fragment() {
 
     }
 
-
-    private suspend fun insertTransaction(transaction: TransactionEntity)  {
-        return withContext(Dispatchers.IO) {
-            db.DAO.insertTransaction(transaction)
-        }
-    }
 
 
     private fun CategoryContainterClickListener() {
@@ -62,6 +56,9 @@ class IncomeFragment : Fragment() {
                 UtilManager.isSalaryClicked = true
                 UtilManager.isHelpClicked = false
                 UtilManager.isGiftClicked = false
+
+                categoryIsChanged = true
+                if (amountIsNotNull) buttonIsClickable.value = true
             }
         }
 
@@ -86,6 +83,10 @@ class IncomeFragment : Fragment() {
                 UtilManager.isSalaryClicked = false
                 UtilManager.isHelpClicked = true
                 UtilManager.isGiftClicked = false
+
+                categoryIsChanged = true
+                if (amountIsNotNull) buttonIsClickable.value = true
+
             }
         }
 
@@ -110,6 +111,10 @@ class IncomeFragment : Fragment() {
                 UtilManager.isSalaryClicked = false
                 UtilManager.isHelpClicked = false
                 UtilManager.isGiftClicked = true
+
+                categoryIsChanged = true
+                if (amountIsNotNull) buttonIsClickable.value = true
+
             }
         }
 
@@ -134,6 +139,9 @@ class IncomeFragment : Fragment() {
                 UtilManager.isSalaryClicked = false
                 UtilManager.isHelpClicked = false
                 UtilManager.isGiftClicked = false
+
+                categoryIsChanged = true
+                if (amountIsNotNull) buttonIsClickable.value = true
             }
         }
     }
@@ -146,5 +154,8 @@ object UtilManager {
     var isHelpClicked: Boolean = false
     var isGiftClicked: Boolean = false
 
-    var comment: String = "s"
+    var categoryIsChanged: Boolean = false
+    var amountIsNotNull: Boolean = false
+    var buttonIsClickable = MutableLiveData<Boolean>(false)
+
 }

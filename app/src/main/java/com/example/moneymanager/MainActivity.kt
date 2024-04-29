@@ -1,13 +1,10 @@
 package com.example.moneymanager
 
 import android.content.pm.ActivityInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.example.moneymanager.databinding.ActivityMainBinding
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,8 +14,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val navController = this.findNavController(R.id.nav_host_fragment_container)
         // disable rotate screen
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+        //setupActionBarWithNavController(this, navController)
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_container)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

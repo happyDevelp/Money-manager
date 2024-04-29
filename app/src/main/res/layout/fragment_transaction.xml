@@ -117,13 +117,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#FB8C00"
         android:importantForAccessibility="no"
         android:src="@drawable/plus_icon"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
-
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,8 +133,8 @@
         android:id="@+id/test_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="8dp"
         android:text="add_test"
         app:layout_constraintBottom_toTopOf="@+id/float_add_button"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -13,8 +13,8 @@ import kotlinx.coroutines.withContext
 
 class TransactionViewModel(private val database: DAO, application: Application) : AndroidViewModel(application) {
 
-    private val _transactions = MutableLiveData<List<TransactionEntity>>()
-    val transactions: LiveData<List<TransactionEntity>>
+    private val _transactions = MutableLiveData<List<TransactionEntity>?>()
+    val transactions: LiveData<List<TransactionEntity>?>
         get() = _transactions
 
     fun fetchEntities() {
@@ -41,10 +41,9 @@ class TransactionViewModel(private val database: DAO, application: Application) 
         }
     }
 
-
-    suspend fun pushTransaction(transaction: TransactionEntity) {
-        return withContext(Dispatchers.IO) {
-            database.insertTransaction(transaction)
+    suspend fun deleteAllTransactions() {
+        withContext(Dispatchers.IO) {
+            database.deleteAllTransactions()
         }
     }
 

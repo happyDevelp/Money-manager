@@ -64,7 +64,6 @@ class TransactionFragment : Fragment() {
         }
 
 
-
         binding.testAdd.setOnClickListener {
                 viewModel.fetchEntities()
             }
@@ -80,5 +79,6 @@ class TransactionFragment : Fragment() {
         binding.floatAddButton.setOnClickListener { viewModel.navigationToAdding() }
 
     }
+
 
 }

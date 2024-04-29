@@ -3,6 +3,8 @@ package com.example.moneymanager.Adding
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -16,6 +18,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moneymanager.DB.TransactionEntity
 import com.example.moneymanager.Income.IncomeFragment
 import com.example.moneymanager.Income.UtilManager
+import com.example.moneymanager.Income.UtilManager.amountIsNotNull
+import com.example.moneymanager.Income.UtilManager.buttonIsClickable
+import com.example.moneymanager.Income.UtilManager.categoryIsChanged
 import com.example.moneymanager.R
 import com.example.moneymanager.Spending.SpendingFragment
 import com.example.moneymanager.Utils.coinAnimation1
@@ -30,12 +35,11 @@ import com.example.moneymanager.databinding.FragmentAddingBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 
 
 class AddingFragment : Fragment() {
-    private lateinit var binding: FragmentAddingBinding
+    lateinit var binding: FragmentAddingBinding
     private lateinit var viewModel: AddingViewModel
     private var calendar = android.icu.util.Calendar.getInstance()
 
@@ -54,6 +58,28 @@ class AddingFragment : Fragment() {
         tabLayoutSettings()
         coinAnimationListener()
         navigationToTransaction()
+        changeHintOfEdTxt()
+        setupCorrectDateOfDateViews()
+
+        binding.amountEditText.addTextChangedListener( object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (categoryIsChanged && s.toString() != "" && s.toString().toInt() != 0) {
+                    binding.saveButton.isEnabled = true
+                    amountIsNotNull = true
+                }
+                else { binding.saveButton.isEnabled = false
+                    amountIsNotNull = if (s.toString() != "" && s.toString().toInt() != 0) true
+                    else false
+                }
+            }
+        })
+
+        buttonIsClickable.observe(viewLifecycleOwner){
+            if (it == true) binding.saveButton.isEnabled = true
+        }
 
         viewModel.navigationStatus.observe(viewLifecycleOwner){
             if (it == true){
@@ -62,42 +88,51 @@ class AddingFragment : Fragment() {
             }
         }
 
-
-        binding.saveButton.setOnClickListener {
-            lifecycleScope.launch {
-
-                val amount = binding.amountEditText.text.toString().toInt()
-                val type = if (binding.viewPager.currentItem == 0) getString(R.string.income) else getString(R.string.spent)
-
-
-                val category = when {
-                    UtilManager.isSalaryClicked -> "Salary"
-                    UtilManager.isHelpClicked -> "Help"
-                    UtilManager.isGiftClicked-> "Gift"
-                    else -> "Other"
-                }
-
-                val wallet = "main"
-                val dateOfTransaction = Calendar.getInstance().time
-                val comment = binding.commentEt.text.toString()
-
-                viewModel.pushTransaction(TransactionEntity(
-                        0, amount, type, category, wallet, dateOfTransaction.toString(), comment
-                    )
-                )
-            }
-        }
-
-
-        binding.calendarPickerImage.setOnClickListener {
-            showDatePicker()
-        }
-
-        setupCorrectDateOfDateViews()
+        binding.saveButton.setOnClickListener { saveButtonClicking() }
+        binding.calendarPickerImage.setOnClickListener { showDatePicker() }
 
     }
 
+    private fun saveButtonClicking() {
+        lifecycleScope.launch {
+            val amount = binding.amountEditText.text.toString().toInt()
+            val type =
+                if (binding.viewPager.currentItem == 0) getString(R.string.income_adding) else getString(
+                    R.string.spent_adding
+                )
 
+            val category = when {
+                UtilManager.isSalaryClicked -> "Salary"
+                UtilManager.isHelpClicked -> "Help"
+                UtilManager.isGiftClicked -> "Gift"
+                else -> "Other"
+            }
+
+            val wallet = "main"
+            val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
+            val current = dateFormat.format(calendar.time)
+            val comment = binding.commentEt.text.toString()
+
+            viewModel.pushTransaction(TransactionEntity(0, amount, type, category, wallet, current, comment))
+            categoryIsChanged = false
+            amountIsNotNull = false
+            buttonIsClickable.value = false
+
+            findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())
+        }
+    }
+
+    private fun changeHintOfEdTxt() {
+        binding.amountEditText.setOnFocusChangeListener { view, hasFokus ->
+            if (hasFokus) { binding.amountEditText.hint = ""
+            }
+            else {
+                if (binding.amountEditText.text.isEmpty()) {
+                    binding.amountEditText.hint = "0"
+                }
+            }
+        }
+    }
 
 
     private fun showDatePicker() {
@@ -208,16 +243,15 @@ class AddingFragment : Fragment() {
     }
 
 
-
     @SuppressLint("ClickableViewAccessibility")
     private fun dateContainerClickListener() {
-
         todaySelected()
         yesterdaySelected()
         twoDaysAgoSelected()
     }
 
-    fun todaySelected() {binding.todayContainer.setOnClickListener {
+    fun todaySelected() {
+        binding.todayContainer.setOnClickListener {
         binding.apply {
             dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -310,8 +344,12 @@ class AddingFragment : Fragment() {
 
 
     private fun navigationToTransaction() {
-        binding.backArrow.setOnClickListener { viewModel.navigationToTransaction() }
-        binding.saveButton.setOnClickListener { viewModel.navigationToTransaction() }
+        binding.backArrow.setOnClickListener {
+            viewModel.navigationToTransaction()
+            categoryIsChanged = false
+            amountIsNotNull = false
+            buttonIsClickable.value = false
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -361,6 +399,10 @@ class AddingFragment : Fragment() {
         tabLayoutMediator.attach()
     }
 
-
-
+    override fun onDestroy() {
+        categoryIsChanged = false
+        amountIsNotNull = false
+        buttonIsClickable.value = false
+        super.onDestroy()
+    }
 }
