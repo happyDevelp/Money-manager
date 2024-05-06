@@ -189,7 +189,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mainAddingContainer"
-            app:layout_constraintVertical_bias="0.333">
+            app:layout_constraintVertical_bias="0.0">
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -323,7 +323,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="52dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/alegreya_sans_sc_medium"
                 android:text="@string/Comment"
                 android:textColor="@color/black"
@@ -390,6 +390,8 @@
                     tools:ignore="ContentDescription,ImageContrastCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
@@ -404,8 +406,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
             tools:ignore="TextContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
 </ScrollView>
+

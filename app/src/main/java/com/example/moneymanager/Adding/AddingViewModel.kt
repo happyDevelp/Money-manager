@@ -1,6 +1,7 @@
 package com.example.moneymanager.Adding
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +15,8 @@ class AddingViewModel(application: Application): AndroidViewModel(application) {
     var database: DataBase = DataBase.getInstance(application)
 
     private val _navigationStatus = MutableLiveData<Boolean?>()
+
+    var imageGalleryUri: Uri? = null
 
     val navigationStatus: LiveData<Boolean?>
         get() = _navigationStatus

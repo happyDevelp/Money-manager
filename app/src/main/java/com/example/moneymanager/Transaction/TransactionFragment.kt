@@ -6,27 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moneymanager.DB.DataBase
 import com.example.moneymanager.TransactionAdapter.TransactionAdapter
 import com.example.moneymanager.databinding.FragmentTransactionBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding
-    // Get a ViewModel instance
-    /*private val viewModel: TransactionViewModel by viewModels {
-        TransactionViewModelFactory(requireActivity().application)
-    }*/
-
-    /*private val viewModel: TransactionViewModel by lazy {
-        val factory = TransactionViewModelFactory(requireActivity().application)
-        ViewModelProvider(this, factory).get(TransactionViewModel::class.java)
-    }*/
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentTransactionBinding.inflate(layoutInflater)
@@ -55,18 +44,14 @@ class TransactionFragment : Fragment() {
         viewModel.fetchEntities()*/
 
 
-
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             val transactionsList = viewModel.getAllTransactions()
             transactionsList.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
             }
         }
 
-
-        binding.testAdd.setOnClickListener {
-                viewModel.fetchEntities()
-            }
+        binding.testAdd.setOnClickListener { viewModel.fetchEntities() }
 
         viewModel.navigationStatus.observe(viewLifecycleOwner) {
             it?.let {
@@ -74,6 +59,12 @@ class TransactionFragment : Fragment() {
                 viewModel.navigationComplete()
             }
         }
+
+        //test uri from db
+/*         lifecycleScope.launch {
+             val picUri = viewModel.getTransactionById(1).imageUri
+             binding.testImage.setImageURI(picUri.toUri())
+        }*/
 
        /* navigationToAdding()*/
         binding.floatAddButton.setOnClickListener { viewModel.navigationToAdding() }

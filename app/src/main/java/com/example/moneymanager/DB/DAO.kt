@@ -14,6 +14,9 @@ interface DAO {
     @Query("select * from transaction_table")
      fun getAllTransactions(): LiveData<List<TransactionEntity>>
 
+    @Query("select * from transaction_table where id = :id")
+    fun getTransactionById(id: Int): TransactionEntity
+
      @Query("delete from transaction_table")
      fun deleteAllTransactions()
 

@@ -19,5 +19,8 @@ data class TransactionEntity (
 
     @ColumnInfo(name = "date_of_transaction") val dateOfTransaction: String,
 
-    @ColumnInfo(name = "comment") val comment: String?
+    @ColumnInfo(name = "comment") val comment: String?,
+
+    @ColumnInfo(name = "image_uri") val imageUri: String?
+
 )

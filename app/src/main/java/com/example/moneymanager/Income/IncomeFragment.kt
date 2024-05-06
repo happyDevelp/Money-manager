@@ -159,3 +159,9 @@ object UtilManager {
     var buttonIsClickable = MutableLiveData<Boolean>(false)
 
 }
+
+fun resetUtilManager() {
+    categoryIsChanged = false
+    amountIsNotNull = false
+    buttonIsClickable.value = false
+}

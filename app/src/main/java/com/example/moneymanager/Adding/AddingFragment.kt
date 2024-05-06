@@ -2,6 +2,8 @@ package com.example.moneymanager.Adding
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +11,9 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -21,8 +26,10 @@ import com.example.moneymanager.Income.UtilManager
 import com.example.moneymanager.Income.UtilManager.amountIsNotNull
 import com.example.moneymanager.Income.UtilManager.buttonIsClickable
 import com.example.moneymanager.Income.UtilManager.categoryIsChanged
+import com.example.moneymanager.Income.resetUtilManager
 import com.example.moneymanager.R
 import com.example.moneymanager.Spending.SpendingFragment
+import com.example.moneymanager.Utils.Cache
 import com.example.moneymanager.Utils.coinAnimation1
 import com.example.moneymanager.Utils.coinAnimation2
 import com.example.moneymanager.Utils.coinAnimation3
@@ -34,6 +41,7 @@ import com.example.moneymanager.Utils.dataViewsAnimationYesterday
 import com.example.moneymanager.databinding.FragmentAddingBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -42,6 +50,7 @@ class AddingFragment : Fragment() {
     lateinit var binding: FragmentAddingBinding
     private lateinit var viewModel: AddingViewModel
     private var calendar = android.icu.util.Calendar.getInstance()
+    lateinit var  cache: Cache
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAddingBinding.inflate(layoutInflater)
@@ -51,6 +60,7 @@ class AddingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        cache = Cache(requireContext())
         viewModel = ViewModelProvider(this).get(AddingViewModel::class.java)
         //disable user swiping between fragments in viewPager2
         binding.viewPager.isUserInputEnabled = false
@@ -60,26 +70,11 @@ class AddingFragment : Fragment() {
         navigationToTransaction()
         changeHintOfEdTxt()
         setupCorrectDateOfDateViews()
+        checkingAmountInput()
 
-        binding.amountEditText.addTextChangedListener( object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable?) {
-                if (categoryIsChanged && s.toString() != "" && s.toString().toInt() != 0) {
-                    binding.saveButton.isEnabled = true
-                    amountIsNotNull = true
-                }
-                else { binding.saveButton.isEnabled = false
-                    amountIsNotNull = if (s.toString() != "" && s.toString().toInt() != 0) true
-                    else false
-                }
-            }
-        })
-
-        buttonIsClickable.observe(viewLifecycleOwner){
-            if (it == true) binding.saveButton.isEnabled = true
-        }
+        buttonIsClickable.observe(viewLifecycleOwner){ if (it == true) binding.saveButton.isEnabled = true }
+        binding.saveButton.setOnClickListener { saveButtonClicking() }
+        binding.calendarPickerImage.setOnClickListener { showDatePicker() }
 
         viewModel.navigationStatus.observe(viewLifecycleOwner){
             if (it == true){
@@ -88,10 +83,35 @@ class AddingFragment : Fragment() {
             }
         }
 
-        binding.saveButton.setOnClickListener { saveButtonClicking() }
-        binding.calendarPickerImage.setOnClickListener { showDatePicker() }
-
+        val getImage = pickImageClickListener()
+        binding.addPhotoImageView.setOnClickListener { getImage.launch("image/*") }
     }
+
+
+    private fun saveImage(imageURI: Uri?) : String? {
+        val inputStream: InputStream? = imageURI?.let { context?.contentResolver?.openInputStream(it) }
+        val bitmap = BitmapFactory.decodeStream(inputStream) //create bitmap object from stream
+        inputStream?.close()
+
+        return if (bitmap != null) cache.saveToCacheAndGetUri(bitmap).toString() else "no photo"
+    }
+
+    private fun pickImageClickListener(): ActivityResultLauncher<String> {
+        val getImage =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { imageGalleryURI ->
+                viewModel.imageGalleryUri = imageGalleryURI
+                if (imageGalleryURI != null) {
+                    binding.addPhotoImageView.apply {
+                        setImageURI(imageGalleryURI)
+                        background = null
+                        setPadding(0, 0, 0, 0)
+                        scaleType = ImageView.ScaleType.CENTER_CROP
+                    }
+                }
+            }
+        return getImage
+    }
+
 
     private fun saveButtonClicking() {
         lifecycleScope.launch {
@@ -113,27 +133,42 @@ class AddingFragment : Fragment() {
             val current = dateFormat.format(calendar.time)
             val comment = binding.commentEt.text.toString()
 
-            viewModel.pushTransaction(TransactionEntity(0, amount, type, category, wallet, current, comment))
-            categoryIsChanged = false
-            amountIsNotNull = false
-            buttonIsClickable.value = false
+            val imageUri: String? = saveImage(viewModel.imageGalleryUri)
 
+            viewModel.pushTransaction(TransactionEntity(0, amount, type, category, wallet, current, comment, imageUri))
+
+            resetUtilManager()
             findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())
         }
+
+    }
+
+    private fun checkingAmountInput() {
+        binding.amountEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (categoryIsChanged && s.toString() != "" && s.toString().toInt() != 0) {
+                    binding.saveButton.isEnabled = true
+                    amountIsNotNull = true
+                } else {
+                    binding.saveButton.isEnabled = false
+                    amountIsNotNull = if (s.toString() != "" && s.toString().toInt() != 0) true
+                    else false
+                }
+            }
+        })
     }
 
     private fun changeHintOfEdTxt() {
         binding.amountEditText.setOnFocusChangeListener { view, hasFokus ->
-            if (hasFokus) { binding.amountEditText.hint = ""
-            }
+            if (hasFokus) binding.amountEditText.hint = ""
             else {
-                if (binding.amountEditText.text.isEmpty()) {
-                    binding.amountEditText.hint = "0"
-                }
+                if (binding.amountEditText.text.isEmpty()) binding.amountEditText.hint = "0"
             }
         }
     }
-
 
     private fun showDatePicker() {
         // Create a DatePickerDialog
@@ -400,9 +435,7 @@ class AddingFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        categoryIsChanged = false
-        amountIsNotNull = false
-        buttonIsClickable.value = false
+        resetUtilManager()
         super.onDestroy()
     }
 }

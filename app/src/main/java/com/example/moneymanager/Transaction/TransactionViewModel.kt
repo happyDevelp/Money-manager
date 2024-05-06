@@ -19,41 +19,31 @@ class TransactionViewModel(private val database: DAO, application: Application) 
 
     fun fetchEntities() {
         viewModelScope.launch {
-            _transactions.value = withContext(Dispatchers.IO) {
-                database.getAllTransactions().value
-            }
+            _transactions.value = withContext(Dispatchers.IO) { database.getAllTransactions().value }
         }
     }
 
-    init {
-        fetchEntities()
-    }
+    init { fetchEntities() }
 
     private val _navigationStatus = MutableLiveData<Boolean?>()
 
     val navigationStatus = _navigationStatus
 
 
-
     suspend fun getAllTransactions(): LiveData<List<TransactionEntity>> {
-        return withContext(Dispatchers.IO) {
-            database.getAllTransactions()
-        }
+        return withContext(Dispatchers.IO) { database.getAllTransactions() }
+    }
+
+    suspend fun getTransactionById(id: Int): TransactionEntity {
+        return withContext(Dispatchers.IO) { database.getTransactionById(id) }
     }
 
     suspend fun deleteAllTransactions() {
-        withContext(Dispatchers.IO) {
-            database.deleteAllTransactions()
-        }
+        withContext(Dispatchers.IO) { database.deleteAllTransactions() }
     }
 
+    fun navigationToAdding() { _navigationStatus.value = true }
 
-    fun navigationToAdding() {
-        _navigationStatus.value = true
-    }
-
-    fun navigationComplete() {
-        _navigationStatus.value = null
-    }
+    fun navigationComplete() { _navigationStatus.value = null }
 
 }
