@@ -1,15 +1,417 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/myScrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Income.IncomeFragment">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:overScrollMode="always">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:textSize="22dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Spending Fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        tools:context=".Income.IncomeFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/alegreya_sans_sc_medium"
+            android:text="@string/Category"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:paddingVertical="8dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/eat_container"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp">
+            <!--android:background="@drawable/category_yellow_active_background"-->
+
+                <ImageView
+                    android:id="@+id/eat_imv"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/category_yellow_background"
+                    android:padding="10dp"
+
+                    android:src="@drawable/food_icon_white" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/clothes_container"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp">
+                <!--android:background="@drawable/category_blue_active_background"-->
+
+                <ImageView
+                    android:id="@+id/clothes_imv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:background="@drawable/category_burgundy_background"
+
+                    android:padding="5dp"
+                    android:src="@drawable/clothes_icon_white"
+                    tools:ignore="ContentDescription" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/technique_container"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp">
+                <!--android:background="@drawable/category_pink_active_background"-->
+
+                <ImageView
+                    android:id="@+id/technique_imv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:background="@drawable/category_blue_background"
+
+                    android:padding="14dp"
+                    android:src="@drawable/techno_icon_white"
+                    tools:ignore="ContentDescription" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/household_container"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp">
+                <!--android:background="@drawable/category_beige_active_background"-->
+
+                <ImageView
+                    android:id="@+id/household_imv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/category_turquoise_background"
+
+                    android:padding="13dp"
+                    android:src="@drawable/home_icon_white"
+                    tools:ignore="ContentDescription,ImageContrastCheck" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/other_container"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp">
+                <!--android:background="@drawable/category_beige_active_background"-->
+
+                <ImageView
+                    android:id="@+id/other_imv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/category_beige_background"
+
+                    android:padding="13dp"
+                    android:src="@drawable/other_icon_white"
+                    tools:ignore="ContentDescription,ImageContrastCheck" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2">
+
+            <TextView
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:text="@string/food"
+                android:textAlignment="center"
+                android:textColor="@color/small_text"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="67dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="@string/clothes"
+                android:textAlignment="center"
+                android:textColor="@color/small_text"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="67dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="@string/Technique"
+                android:textAlignment="center"
+                android:textColor="@color/small_text"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:text="@string/house"
+                android:textAlignment="center"
+                android:textColor="@color/small_text"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:text="@string/other"
+                android:textAlignment="center"
+                android:textColor="@color/small_text"
+                android:textSize="16sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+
+
+    <!--
+    <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/linearLayoutCompat5"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="12dp"
+    android:paddingVertical="8dp"
+
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2"
+    app:layout_constraintVertical_bias="0.0">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/salary_container1"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="5dp">
+        &lt;!&ndash;android:background="@drawable/category_green_active_background"&ndash;&gt;
+
+        <ImageView
+            android:id="@+id/salary_imv1"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            android:background="@drawable/category_yellow_background"
+            android:padding="10dp"
+
+            android:src="@drawable/food_icon_white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/help_container1"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="5dp">
+        &lt;!&ndash;android:background="@drawable/category_blue_active_background"&ndash;&gt;
+
+        <ImageView
+            android:id="@+id/help_imv1"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:background="@drawable/category_blue_background"
+
+            android:padding="5dp"
+            android:src="@drawable/help_icon_white"
+            tools:ignore="ContentDescription" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/gift_container1"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="5dp">
+        &lt;!&ndash;android:background="@drawable/category_pink_active_background"&ndash;&gt;
+
+        <ImageView
+            android:id="@+id/gift_imv1"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:background="@drawable/category_pink_background"
+
+            android:padding="14dp"
+            android:src="@drawable/gift_icon_white"
+            tools:ignore="ContentDescription" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/other_container1"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="5dp">
+        &lt;!&ndash;android:background="@drawable/category_beige_active_background"&ndash;&gt;
+
+        <ImageView
+            android:id="@+id/other_imv1"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            android:background="@drawable/category_beige_background"
+
+            android:padding="13dp"
+            android:src="@drawable/other_icon_white"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/linearLayoutCompat411"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5">
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_weight="1"
+        android:text="@string/food"
+        android:textAlignment="center"
+        android:textColor="@color/small_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:text="@string/help"
+        android:textAlignment="center"
+        android:textColor="@color/small_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="77dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_weight="1"
+        android:text="@string/gift"
+        android:textAlignment="center"
+        android:textColor="@color/small_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_weight="1"
+        android:text="@string/other"
+        android:textAlignment="center"
+        android:textColor="@color/small_text"
+        android:textSize="16sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+      <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearLayoutCompat41"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2">
+
+                <TextView
+                    android:layout_width="68dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:text="@string/food"
+                    android:textAlignment="center"
+                    android:textColor="@color/small_text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="67dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/clothes"
+                    android:textAlignment="center"
+                    android:textColor="@color/small_text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="77dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:text="@string/gift"
+                    android:textAlignment="center"
+                    android:textColor="@color/small_text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:text="@string/other"
+                    android:textAlignment="center"
+                    android:textColor="@color/small_text"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+    -->
+

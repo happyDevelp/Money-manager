@@ -26,9 +26,9 @@ import com.example.moneymanager.Income.UtilManager
 import com.example.moneymanager.Income.UtilManager.amountIsNotNull
 import com.example.moneymanager.Income.UtilManager.buttonIsClickable
 import com.example.moneymanager.Income.UtilManager.categoryIsChanged
-import com.example.moneymanager.Income.resetUtilManager
 import com.example.moneymanager.R
 import com.example.moneymanager.Spending.SpendingFragment
+import com.example.moneymanager.Spending.SpendingUtilityManager
 import com.example.moneymanager.Utils.Cache
 import com.example.moneymanager.Utils.coinAnimation1
 import com.example.moneymanager.Utils.coinAnimation2
@@ -116,15 +116,22 @@ class AddingFragment : Fragment() {
     private fun saveButtonClicking() {
         lifecycleScope.launch {
             val amount = binding.amountEditText.text.toString().toInt()
-            val type =
-                if (binding.viewPager.currentItem == 0) getString(R.string.income_adding) else getString(
-                    R.string.spent_adding
-                )
 
-            val category = when {
-                UtilManager.isSalaryClicked -> "Salary"
-                UtilManager.isHelpClicked -> "Help"
-                UtilManager.isGiftClicked -> "Gift"
+            val type = if (binding.viewPager.currentItem == 0) getString(R.string.income_adding)
+            else getString(R.string.spent_adding)
+
+            val category: String = if (type == context?.getString(R.string.income_adding)) {
+                when {
+                    UtilManager.isSalaryClicked -> "Salary"
+                    UtilManager.isHelpClicked -> "Help"
+                    UtilManager.isGiftClicked -> "Gift"
+                    else -> "Other"
+                }
+            } else when {
+                SpendingUtilityManager.eatIsClicked -> "Eat"
+                SpendingUtilityManager.clothesIsClicked -> "Clothes"
+                SpendingUtilityManager.techniqueIsClicked -> "Technique"
+                SpendingUtilityManager.houseIsClicked -> "household"
                 else -> "Other"
             }
 
@@ -132,12 +139,11 @@ class AddingFragment : Fragment() {
             val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
             val current = dateFormat.format(calendar.time)
             val comment = binding.commentEt.text.toString()
-
             val imageUri: String? = saveImage(viewModel.imageGalleryUri)
 
             viewModel.pushTransaction(TransactionEntity(0, amount, type, category, wallet, current, comment, imageUri))
 
-            resetUtilManager()
+            UtilManager.reset()
             findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())
         }
 
@@ -184,44 +190,18 @@ class AddingFragment : Fragment() {
                     date2daysago.text = formattedDate // Update the TextView to display the selected date with the "Selected Date: " prefix
                     textView2daysAgo.text = getString(R.string.textByDatePicker)
 
-                    date2daysago.setTextColor(
-                        ContextCompat.getColor(requireContext(),
-                        R.color.white
-                    ))
-                    textView2daysAgo.setTextColor(
-                        ContextCompat.getColor(requireContext(),
-                        R.color.white
-                    ))
-                    binding.twoDaysAgoContainer.background =
-                        (ContextCompat.getDrawable(requireContext(),
-                            R.drawable.active_datepicker_background
-                        ))
+                    date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    binding.twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(), R.drawable.active_datepicker_background))
 
-                    dateToday.setTextColor(
-                        ContextCompat.getColor(requireContext(),
-                        R.color.black
-                    ))
-                    textViewToday.setTextColor(
-                        ContextCompat.getColor(requireContext(),
-                        R.color.black
-                    ))
-                    todayContainer.background = (ContextCompat.getDrawable(requireContext(),
-                        R.color.white
-                    ))
+                    dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    todayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
-                    dateYesterday.setTextColor(
-                        ContextCompat.getColor(requireContext(),
-                        R.color.black
-                    ))
-                    textViewYesterday.setTextColor(
-                        ContextCompat.getColor(requireContext(),
-                        R.color.black
-                    ))
-                    yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(),
-                        R.color.white
-                    ))
+                    dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
                 }
-
                 dataViewsAnimationTwoDaysAgo(binding)
             },
 
@@ -290,25 +270,15 @@ class AddingFragment : Fragment() {
         binding.apply {
             dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            it.background = (ContextCompat.getDrawable(requireContext(),
-                R.drawable.active_datepicker_background
-            ))
+            it.background = (ContextCompat.getDrawable(requireContext(), R.drawable.active_datepicker_background))
 
             dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(),
-                R.color.black
-            ))
-            yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(),
-                R.color.white
-            ))
+            textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
             date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(),
-                R.color.black
-            ))
-            twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(),
-                R.color.white
-            ))
+            textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
         }
 
         dataViewsAnimationToday(binding)
@@ -320,26 +290,16 @@ class AddingFragment : Fragment() {
         binding.yesterdayContainer.setOnClickListener {
             binding.apply {
                 dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(),
-                    R.color.white
-                ))
-                it.background = (ContextCompat.getDrawable(requireContext(),
-                    R.drawable.active_datepicker_background
-                ))
+                textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                it.background = (ContextCompat.getDrawable(requireContext(), R.drawable.active_datepicker_background))
 
                 dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                todayContainer.background = (ContextCompat.getDrawable(requireContext(),
-                    R.color.white
-                ))
+                todayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
                 date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(),
-                    R.color.black
-                ))
-                twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(),
-                    R.color.white
-                ))
+                textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
             }
 
             dataViewsAnimationYesterday(binding)
@@ -350,40 +310,26 @@ class AddingFragment : Fragment() {
         binding.twoDaysAgoContainer.setOnClickListener {
             binding.apply {
                 date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(),
-                    R.color.white
-                ))
-                it.background = (ContextCompat.getDrawable(requireContext(),
-                    R.drawable.active_datepicker_background
-                ))
+                textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                it.background = (ContextCompat.getDrawable(requireContext(), R.drawable.active_datepicker_background))
 
                 dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                todayContainer.background = (ContextCompat.getDrawable(requireContext(),
-                    R.color.white
-                ))
+                todayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
                 dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(),
-                    R.color.black
-                ))
-                yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(),
-                    R.color.white
-                ))
+                textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
             }
 
             dataViewsAnimationTwoDaysAgo(binding)
         }
     }
 
-
-
     private fun navigationToTransaction() {
         binding.backArrow.setOnClickListener {
             viewModel.navigationToTransaction()
-            categoryIsChanged = false
-            amountIsNotNull = false
-            buttonIsClickable.value = false
+            UtilManager.reset()
         }
     }
 
@@ -408,9 +354,7 @@ class AddingFragment : Fragment() {
     }
 
     class MyAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-        override fun getItemCount(): Int {
-            return 2
-        }
+        override fun getItemCount(): Int { return 2 }
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
@@ -435,7 +379,7 @@ class AddingFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        resetUtilManager()
+        UtilManager.reset()
         super.onDestroy()
     }
 }

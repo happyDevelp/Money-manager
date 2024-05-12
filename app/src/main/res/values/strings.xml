@@ -35,4 +35,8 @@
     <string name="UAH">"₴ "</string>
     <string name="amount_transaction">₴ %1$s</string>
     <string name="type_transaction">💰%1$s</string>
+    <string name="food">Їжа</string>
+    <string name="clothes">Одяг</string>
+    <string name="Technique">Техніка</string>
+    <string name="house">Побут</string>
 </resources>

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import com.example.moneymanager.DB.DataBase
 import com.example.moneymanager.Income.UtilManager.amountIsNotNull
 import com.example.moneymanager.Income.UtilManager.buttonIsClickable
 import com.example.moneymanager.Income.UtilManager.categoryIsChanged
@@ -15,8 +14,7 @@ import com.example.moneymanager.R
 import com.example.moneymanager.databinding.FragmentIncomeBinding
 
 class IncomeFragment : Fragment() {
-    private lateinit var db: DataBase
-    lateinit var binding: FragmentIncomeBinding
+    private lateinit var binding: FragmentIncomeBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentIncomeBinding.inflate(layoutInflater)
@@ -25,28 +23,16 @@ class IncomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        db = DataBase.getInstance(requireContext())
-
-        CategoryContainterClickListener()
-
+        categoryContainerClickListener()
     }
 
-
-
-    private fun CategoryContainterClickListener() {
+    private fun categoryContainerClickListener() {
         binding.salaryContainer.setOnClickListener {
             binding.apply {
-                salaryContainer.background = ContextCompat.getDrawable(requireContext(),
-                    R.drawable.category_green_active_background )
-                helpContainer.background = ContextCompat.getDrawable(requireContext(),
-                    R.drawable.transparent_layout
-                )
-                giftContainer.background = ContextCompat.getDrawable(requireContext(),
-                    R.drawable.transparent_layout
-                )
-                otherContainer.background = ContextCompat.getDrawable(requireContext(),
-                    R.drawable.transparent_layout
-                )
+                salaryContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.category_green_active_background )
+                helpContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                giftContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                otherContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
 
                 salaryImv.background.alpha = 0
                 helpImv.background.alpha = 255
@@ -64,16 +50,10 @@ class IncomeFragment : Fragment() {
 
         binding.helpContainer.setOnClickListener {
             binding.apply {
-                salaryContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
-                helpContainer.background = ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.category_blue_active_background
-                )
-                giftContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
-                otherContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                salaryContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                helpContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.category_blue_active_background)
+                giftContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                otherContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
 
                 salaryImv.background.alpha = 255
                 helpImv.background.alpha = 0
@@ -86,22 +66,15 @@ class IncomeFragment : Fragment() {
 
                 categoryIsChanged = true
                 if (amountIsNotNull) buttonIsClickable.value = true
-
             }
         }
 
         binding.giftContainer.setOnClickListener {
             binding.apply {
-                salaryContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
-                helpContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
-                giftContainer.background = ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.category_pink_active_background
-                )
-                otherContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                salaryContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                helpContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                giftContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.category_pink_active_background)
+                otherContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
 
                 salaryImv.background.alpha = 255
                 helpImv.background.alpha = 255
@@ -114,22 +87,15 @@ class IncomeFragment : Fragment() {
 
                 categoryIsChanged = true
                 if (amountIsNotNull) buttonIsClickable.value = true
-
             }
         }
 
         binding.otherContainer.setOnClickListener {
             binding.apply {
-                salaryContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
-                helpContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
-                giftContainer.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
-                otherContainer.background = ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.category_beige_active_background
-                )
+                salaryContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                helpContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                giftContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_layout)
+                otherContainer.background = ContextCompat.getDrawable(requireContext(), R.drawable.category_beige_active_background)
 
                 salaryImv.background.alpha = 255
                 helpImv.background.alpha = 255
@@ -145,8 +111,6 @@ class IncomeFragment : Fragment() {
             }
         }
     }
-
-
 }
 
 object UtilManager {
@@ -158,10 +122,11 @@ object UtilManager {
     var amountIsNotNull: Boolean = false
     var buttonIsClickable = MutableLiveData<Boolean>(false)
 
+    fun reset() {
+        categoryIsChanged = false
+        amountIsNotNull = false
+        buttonIsClickable.value = false
+    }
 }
 
-fun resetUtilManager() {
-    categoryIsChanged = false
-    amountIsNotNull = false
-    buttonIsClickable.value = false
-}
+
