@@ -16,7 +16,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -41,15 +40,17 @@ import com.example.moneymanager.Utils.dataViewsAnimationYesterday
 import com.example.moneymanager.databinding.FragmentAddingBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 
 class AddingFragment : Fragment() {
     lateinit var binding: FragmentAddingBinding
-    private lateinit var viewModel: AddingViewModel
-    private var calendar = android.icu.util.Calendar.getInstance()
+    private val viewModel: AddingViewModel by viewModel()
+    private var calendar = Calendar.getInstance()
     lateinit var  cache: Cache
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -61,7 +62,7 @@ class AddingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         cache = Cache(requireContext())
-        viewModel = ViewModelProvider(this).get(AddingViewModel::class.java)
+       /* viewModel = ViewModelProvider(this).get(AddingViewModel::class.java)*/
         //disable user swiping between fragments in viewPager2
         binding.viewPager.isUserInputEnabled = false
 
@@ -141,7 +142,8 @@ class AddingFragment : Fragment() {
             val comment = binding.commentEt.text.toString()
             val imageUri: String? = saveImage(viewModel.imageGalleryUri)
 
-            viewModel.pushTransaction(TransactionEntity(0, amount, type, category, wallet, current, comment, imageUri))
+            val transactionUnit = TransactionEntity(0, amount, type, category, wallet, current, comment, imageUri)
+            viewModel.pushTransaction(transactionUnit)
 
             UtilManager.reset()
             findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())
@@ -210,7 +212,7 @@ class AddingFragment : Fragment() {
             calendar.get(android.icu.util.Calendar.DAY_OF_MONTH)
         )
 
-        calendar = android.icu.util.Calendar.getInstance()
+        calendar = Calendar.getInstance()
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis // set maxDate in DatePicker
         // Show the DatePicker dialog
         datePickerDialog.show()

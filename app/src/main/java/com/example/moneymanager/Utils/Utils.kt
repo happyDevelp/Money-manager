@@ -1,5 +1,8 @@
 package com.example.moneymanager.Utils
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.moneymanager.databinding.FragmentAddingBinding
 
 /** ANIMATIONS **/
@@ -135,4 +138,16 @@ fun dataViewsAnimationTwoDaysAgo(binding: FragmentAddingBinding) {
     }
 }
 
-
+/**
+ * Transforms a [LiveData] into [MutableLiveData]
+ *
+ * @param T type
+ * @return [MutableLiveData] emitting the same values
+ */
+fun <T> LiveData<T>.toMutableLiveData(): MutableLiveData<T> {
+    val mediatorLiveData = MediatorLiveData<T>()
+    mediatorLiveData.addSource(this) {
+        mediatorLiveData.value = it
+    }
+    return mediatorLiveData
+}

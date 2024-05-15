@@ -1,29 +1,20 @@
 package com.example.moneymanager.Transaction
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.example.moneymanager.DB.DAO
+import androidx.lifecycle.ViewModel
 import com.example.moneymanager.DB.TransactionEntity
+import com.example.moneymanager.DI.DatabaseRepository
+import com.example.moneymanager.Utils.toMutableLiveData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TransactionViewModel(private val database: DAO, application: Application) : AndroidViewModel(application) {
+class TransactionViewModel(private val repository: DatabaseRepository) : ViewModel() {
 
-    private val _transactions = MutableLiveData<List<TransactionEntity>?>()
-    val transactions: LiveData<List<TransactionEntity>?>
+    private val _transactions: MutableLiveData<List<TransactionEntity>> = repository.getAllTransactions().toMutableLiveData()
+    val transactions: LiveData<List<TransactionEntity>>
         get() = _transactions
 
-    fun fetchEntities() {
-        viewModelScope.launch {
-            _transactions.value = withContext(Dispatchers.IO) { database.getAllTransactions().value }
-        }
-    }
-
-    init { fetchEntities() }
 
     private val _navigationStatus = MutableLiveData<Boolean?>()
 
@@ -31,15 +22,15 @@ class TransactionViewModel(private val database: DAO, application: Application) 
 
 
     suspend fun getAllTransactions(): LiveData<List<TransactionEntity>> {
-        return withContext(Dispatchers.IO) { database.getAllTransactions() }
+        return withContext(Dispatchers.IO) { repository.getAllTransactions() }
     }
 
     suspend fun getTransactionById(id: Int): TransactionEntity {
-        return withContext(Dispatchers.IO) { database.getTransactionById(id) }
+        return withContext(Dispatchers.IO) { repository.getTransactionById(id) }
     }
 
     suspend fun deleteAllTransactions() {
-        withContext(Dispatchers.IO) { database.deleteAllTransactions() }
+        withContext(Dispatchers.IO) { repository.deleteAllTransactions() }
     }
 
     fun navigationToAdding() { _navigationStatus.value = true }
