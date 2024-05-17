@@ -36,6 +36,13 @@ class TransactionFragment : Fragment() {
             }
         }
 
+        adapter.setOnClickListener(object : TransactionAdapter.OnClickListener {
+            override fun onItemClick(itemId: Int) {
+                findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToDetailsFragment(itemId))
+                viewModel.navigationComplete()
+            }
+        })
+
         //test uri from db
 /*         lifecycleScope.launch {
              val picUri = viewModel.getTransactionById(1).imageUri

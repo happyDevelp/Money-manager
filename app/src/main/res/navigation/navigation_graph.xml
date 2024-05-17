@@ -17,6 +17,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_transactionFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
 
     </fragment>
     <fragment
@@ -38,4 +41,12 @@
         android:name="com.example.moneymanager.Income.IncomeFragment"
         android:label="fragment_spending"
         tools:layout="@layout/fragment_spending" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.moneymanager.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <argument android:name="item"
+            app:argType="integer" />
+    </fragment>
 </navigation>

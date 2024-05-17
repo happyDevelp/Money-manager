@@ -29,7 +29,7 @@
     <string name="type_of_wallet">Головний</string>
     <string name="select_account">Обрати рахунок</string>
     <string name="textByDatePicker">Вибране</string>
-    <string name="hint_back_arrow">Назад</string>
+    <string name="hint_back_arrow">Back</string>
     <string name="hint_calendar">Обрати дату</string>
     <string name="salary_item">💰Зарплата</string>
     <string name="UAH">"₴ "</string>
@@ -39,4 +39,8 @@
     <string name="clothes">Одяг</string>
     <string name="Technique">Техніка</string>
     <string name="house">Побут</string>
+    <string name="detail_transaction">Transaction details</string>
+    <string name="amount_transaction_details">сума</string>
+    <string name="hint_edit">Edit</string>
+    <string name="payment_account">Рахунок</string>
 </resources>

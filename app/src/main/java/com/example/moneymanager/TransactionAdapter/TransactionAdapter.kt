@@ -10,6 +10,17 @@ import com.example.moneymanager.R
 import com.example.moneymanager.databinding.ItemTransactionBinding
 
 class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.TransactionViewHolder>(DiffCallBack()) {
+    private var listener: OnClickListener? = null
+
+    // Function for setting the interface variable
+    fun setOnClickListener(listener: OnClickListener) {
+        this.listener = listener
+    }
+
+    // Declaring the interface in adapter or we can declare it in seperate file
+    interface OnClickListener {
+        fun onItemClick(itemId: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder =
         TransactionViewHolder(ItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -17,7 +28,7 @@ class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.Tran
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val currentItem = getItem(position)
-
+        holder.itemView.setOnClickListener { listener?.onItemClick(currentItem.id) }
         holder.bind(currentItem)
     }
 
@@ -37,5 +48,10 @@ class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.Tran
         override fun areContentsTheSame(oldItem: TransactionEntity, newItem: TransactionEntity): Boolean = oldItem.id == newItem.id
     }
 
+
 }
+
+
+
+
 
