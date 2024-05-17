@@ -26,7 +26,6 @@
     <string name="gift">Подарунки</string>
     <string name="help">Допомога</string>
     <string name="salary">Зарплата</string>
-    <string name="type_of_wallet">Головний</string>
     <string name="select_account">Обрати рахунок</string>
     <string name="textByDatePicker">Вибране</string>
     <string name="hint_back_arrow">Back</string>
@@ -43,4 +42,10 @@
     <string name="amount_transaction_details">сума</string>
     <string name="hint_edit">Edit</string>
     <string name="payment_account">Рахунок</string>
+    <string name="transaction_type_details">Тип</string>
+    <string name="type_of_wallet">Головний</string>
+    <string name="date_of_transaction_details">Дата</string>
+    <string name="category_details">Категорія</string>
+    <string name="delete_item_details">Видалити</string>
+    <string name="delete_details">Видалити</string>
 </resources>
