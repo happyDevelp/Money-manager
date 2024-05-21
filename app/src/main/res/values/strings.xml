@@ -48,4 +48,6 @@
     <string name="category_details">Категорія</string>
     <string name="delete_item_details">Видалити</string>
     <string name="delete_details">Видалити</string>
+    <string name="comment_details">Comment</string>
+    <string name="amount_details">%1$s ₴</string>
 </resources>

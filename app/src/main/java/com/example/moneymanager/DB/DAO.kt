@@ -20,4 +20,7 @@ interface DAO {
      @Query("delete from transaction_table")
      fun deleteAllTransactions()
 
+     @Query("delete from transaction_table where id = :id")
+     fun deleteTransactionById(id: Int)
+
 }

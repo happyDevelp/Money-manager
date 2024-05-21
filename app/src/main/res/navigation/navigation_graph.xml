@@ -43,10 +43,13 @@
         tools:layout="@layout/fragment_spending" />
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.moneymanager.DetailsFragment"
+        android:name="com.example.moneymanager.DetailsFragment.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
-        <argument android:name="item"
+        <argument android:name="itemId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_detailsFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
     </fragment>
 </navigation>

@@ -19,6 +19,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    kapt {
+        arguments{
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
+
+
     buildTypes {
         release {
             isMinifyEnabled = false

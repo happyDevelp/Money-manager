@@ -229,9 +229,9 @@ class AddingFragment : Fragment() {
 
         /** yesterday **/
         // Need to check that the first day of the month has passed, otherwise we may get fake date
-        if (calendar.get(android.icu.util.Calendar.DAY_OF_MONTH) == 1) {
-            calendar.add(android.icu.util.Calendar.MONTH, -1)
-            calendar.set(android.icu.util.Calendar.DAY_OF_MONTH, calendar.getActualMaximum(android.icu.util.Calendar.DAY_OF_MONTH))
+        if (calendar.get(Calendar.DAY_OF_MONTH) == 1) {
+            calendar.add(Calendar.MONTH, -1)
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(android.icu.util.Calendar.DAY_OF_MONTH))
         } else calendar.add(android.icu.util.Calendar.DAY_OF_MONTH, -1)
 
         // should to pass format of date (pattern) and region into SimpleDateFormat params. .format transform Date type to a string
@@ -244,12 +244,12 @@ class AddingFragment : Fragment() {
 
         /** the day before yesterday **/
         // Need to check that the second day of the month has passed, otherwise we may get fake date
-        if (calendar.get(android.icu.util.Calendar.DAY_OF_MONTH) == 1 || calendar.get(android.icu.util.Calendar.DAY_OF_MONTH) == 2 ) {
-            calendar.add(android.icu.util.Calendar.MONTH, -1)
-            calendar.set(android.icu.util.Calendar.DAY_OF_MONTH, calendar.getActualMaximum(android.icu.util.Calendar.DAY_OF_MONTH))
+        if (calendar.get(Calendar.DAY_OF_MONTH) == 1 || calendar.get(android.icu.util.Calendar.DAY_OF_MONTH) == 2 ) {
+            calendar.add(Calendar.MONTH, -1)
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(android.icu.util.Calendar.DAY_OF_MONTH))
 
             if (calendar.get(android.icu.util.Calendar.DAY_OF_MONTH) == 1) calendar.add(android.icu.util.Calendar.DAY_OF_MONTH, -1) // if it is first day of the month
-        } else calendar.add(android.icu.util.Calendar.DAY_OF_MONTH, -2)
+        } else calendar.add(Calendar.DAY_OF_MONTH, -2)
 
         // should to pass format of date (pattern) and region into SimpleDateFormat params. .format transform Date type to a string
         val correct2daysAgoDateFormat =
