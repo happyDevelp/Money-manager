@@ -27,7 +27,6 @@
     <string name="help">Допомога</string>
     <string name="salary">Зарплата</string>
     <string name="select_account">Обрати рахунок</string>
-    <string name="textByDatePicker">Вибране</string>
     <string name="hint_back_arrow">Back</string>
     <string name="hint_calendar">Обрати дату</string>
     <string name="salary_item">💰Зарплата</string>
@@ -50,4 +49,9 @@
     <string name="delete_details">Видалити</string>
     <string name="comment_details">Comment</string>
     <string name="amount_details">%1$s ₴</string>
+    <string name="self_selected_date">Вибране</string>
+    <string name="confirm_delete">Confirm delete</string>
+    <string name="describe_text_comfriming_delete">Are you shure you want to delete?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel_button">Cancel</string>
 </resources>

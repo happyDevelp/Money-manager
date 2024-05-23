@@ -15,11 +15,13 @@ import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moneymanager.DB.TransactionEntity
+import com.example.moneymanager.DetailsFragment.DetailUtils
 import com.example.moneymanager.Income.IncomeFragment
 import com.example.moneymanager.Income.UtilManager
 import com.example.moneymanager.Income.UtilManager.amountIsNotNull
@@ -86,10 +88,19 @@ class AddingFragment : Fragment() {
 
         val getImage = pickImageClickListener()
         binding.addPhotoImageView.setOnClickListener { getImage.launch("image/*") }
+
+        if (DetailUtils.editItem) { restoringValues() }
+
+      /*  val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.fragment_delete_dialog)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.delete_dialog_background))
+        dialog.setCancelable(true)*/
+
     }
 
 
-    private fun saveImage(imageURI: Uri?) : String? {
+    private fun saveImage(imageURI: Uri?) : String {
         val inputStream: InputStream? = imageURI?.let { context?.contentResolver?.openInputStream(it) }
         val bitmap = BitmapFactory.decodeStream(inputStream) //create bitmap object from stream
         inputStream?.close()
@@ -102,52 +113,65 @@ class AddingFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.GetContent()) { imageGalleryURI ->
                 viewModel.imageGalleryUri = imageGalleryURI
                 if (imageGalleryURI != null) {
-                    binding.addPhotoImageView.apply {
-                        setImageURI(imageGalleryURI)
-                        background = null
-                        setPadding(0, 0, 0, 0)
-                        scaleType = ImageView.ScaleType.CENTER_CROP
-                    }
+                    imageSetup(imageGalleryURI)
                 }
             }
         return getImage
     }
 
+    private fun imageSetup(imageGalleryURI: Uri?) {
+        binding.addPhotoImageView.apply {
+            setImageURI(imageGalleryURI)
+            background = null
+            setPadding(0, 0, 0, 0)
+            scaleType = ImageView.ScaleType.CENTER_CROP
+        }
+    }
+
 
     private fun saveButtonClicking() {
-        lifecycleScope.launch {
-            val amount = binding.amountEditText.text.toString().toInt()
+            lifecycleScope.launch {
+                val amount = binding.amountEditText.text.toString().toInt()
 
-            val type = if (binding.viewPager.currentItem == 0) getString(R.string.income_adding)
-            else getString(R.string.spent_adding)
+                val type = if (binding.viewPager.currentItem == 0) getString(R.string.income_adding)
+                else getString(R.string.spent_adding)
 
-            val category: String = if (type == context?.getString(R.string.income_adding)) {
-                when {
-                    UtilManager.isSalaryClicked -> "Salary"
-                    UtilManager.isHelpClicked -> "Help"
-                    UtilManager.isGiftClicked -> "Gift"
+                val category: String = if (type == context?.getString(R.string.income_adding)) {
+                    when {
+                        UtilManager.isSalaryClicked -> "Salary"
+                        UtilManager.isHelpClicked -> "Help"
+                        UtilManager.isGiftClicked -> "Gift"
+                        else -> "Other"
+                    }
+                } else when {
+                    SpendingUtilityManager.eatIsClicked -> "Eat"
+                    SpendingUtilityManager.clothesIsClicked -> "Clothes"
+                    SpendingUtilityManager.techniqueIsClicked -> "Technique"
+                    SpendingUtilityManager.houseIsClicked -> "household"
                     else -> "Other"
                 }
-            } else when {
-                SpendingUtilityManager.eatIsClicked -> "Eat"
-                SpendingUtilityManager.clothesIsClicked -> "Clothes"
-                SpendingUtilityManager.techniqueIsClicked -> "Technique"
-                SpendingUtilityManager.houseIsClicked -> "household"
-                else -> "Other"
+
+                val wallet = "main"
+                val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
+                val current = dateFormat.format(calendar.time)
+                val comment = binding.commentEt.text.toString()
+                val imageUri: String? = saveImage(viewModel.imageGalleryUri)
+
+                val transactionUnit =
+                    TransactionEntity(0, amount, type, category, wallet, current, comment, imageUri)
+
+                //bad idea using editItem?
+                if (!DetailUtils.editItem) { viewModel.pushTransaction(transactionUnit) }
+                else {
+                    viewModel.updateTransaction(amount, type, category, wallet, current, comment, imageUri, DetailUtils.id)
+                    DetailUtils.editItem = false
+                    DetailUtils.id = 0
+                }
+
+
+                UtilManager.reset()
+                findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())
             }
-
-            val wallet = "main"
-            val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
-            val current = dateFormat.format(calendar.time)
-            val comment = binding.commentEt.text.toString()
-            val imageUri: String? = saveImage(viewModel.imageGalleryUri)
-
-            val transactionUnit = TransactionEntity(0, amount, type, category, wallet, current, comment, imageUri)
-            viewModel.pushTransaction(transactionUnit)
-
-            UtilManager.reset()
-            findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())
-        }
 
     }
 
@@ -190,7 +214,7 @@ class AddingFragment : Fragment() {
 
                 binding.apply {
                     date2daysago.text = formattedDate // Update the TextView to display the selected date with the "Selected Date: " prefix
-                    textView2daysAgo.text = getString(R.string.textByDatePicker)
+                    textView2daysAgo.text = getString(R.string.self_selected_date)
 
                     date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -267,25 +291,24 @@ class AddingFragment : Fragment() {
         twoDaysAgoSelected()
     }
 
-    fun todaySelected() {
+    private fun todaySelected() {
         binding.todayContainer.setOnClickListener {
-        binding.apply {
-            dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            it.background = (ContextCompat.getDrawable(requireContext(), R.drawable.active_datepicker_background))
+            binding.apply {
+                dateToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                textViewToday.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                it.background = (ContextCompat.getDrawable(requireContext(), R.drawable.active_datepicker_background))
 
-            dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                dateYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                textViewYesterday.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                yesterdayContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
 
-            date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+                date2daysago.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                textView2daysAgo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                twoDaysAgoContainer.background = (ContextCompat.getDrawable(requireContext(), R.color.white))
+            }
+            dataViewsAnimationToday(binding)
+
         }
-
-        dataViewsAnimationToday(binding)
-    }
-
     }
 
     private fun yesterdaySelected() {
@@ -325,6 +348,24 @@ class AddingFragment : Fragment() {
             }
 
             dataViewsAnimationTwoDaysAgo(binding)
+        }
+    }
+
+    private fun restoringValues() {
+        binding.apply {
+            lifecycleScope.launch {
+                val item = viewModel.getTransactionById(DetailUtils.id)
+                amountEditText.setText(item.amount.toString())
+                textView2daysAgo.text = getString(R.string.self_selected_date)
+                txtAddTransaction.text = "Change Transaction"
+
+                date2daysago.text = item.dateOfTransaction.trim().substringBefore(" ")
+                twoDaysAgoSelected()
+
+                commentEt.setText(item.comment.toString())
+                if (item.imageUri != "no photo") imageSetup(item.imageUri?.toUri())
+                DetailUtils.editItem = false
+            }
         }
     }
 

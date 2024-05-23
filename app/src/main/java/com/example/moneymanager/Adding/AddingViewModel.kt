@@ -28,5 +28,23 @@ class AddingViewModel(private val repository: DatabaseRepository): ViewModel() {
         }
     }
 
+    suspend fun getTransactionById(id: Int): TransactionEntity {
+        return withContext(Dispatchers.IO) {
+            repository.getTransactionById(id)
+        }
+    }
+
+    suspend fun updateTransaction(    amount: Int,
+                                      transactionType: String,
+                                      transactionCategory: String,
+                                      wallet: String,
+                                      dateOfTransaction: String,
+                                      comment: String?,
+                                      imageUri: String?,
+                                      id: Int) {
+        withContext(Dispatchers.IO) {
+            repository.updateTransaction(amount, transactionType, transactionCategory, wallet, dateOfTransaction, comment, imageUri, id)
+        }
+    }
 
 }

@@ -51,5 +51,8 @@
         <action
             android:id="@+id/action_detailsFragment_to_transactionFragment"
             app:destination="@id/transactionFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_addingFragment"
+            app:destination="@id/addingFragment" />
     </fragment>
 </navigation>

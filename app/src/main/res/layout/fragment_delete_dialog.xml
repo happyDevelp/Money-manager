@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardElevation="16dp"
+    app:cardCornerRadius="16dp">
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:padding="16dp">
+
+       <TextView
+           android:id="@+id/textView3"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fontFamily="@font/alegreya_sans_sc_medium"
+           android:text="@string/confirm_delete"
+
+           android:textSize="20sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
+
+       <TextView
+           android:id="@+id/textView6"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="12dp"
+
+           android:text="@string/describe_text_comfriming_delete"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="32dp"
+           android:layout_marginEnd="13dp"
+           android:orientation="horizontal"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.53"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+           <com.google.android.material.button.MaterialButton
+               android:id="@+id/delete_button"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginEnd="4dp"
+               android:backgroundTint="#DFDD5757"
+               android:text="@string/delete"
+               android:textColor="@color/white"
+               app:strokeColor="@color/delete_dialog_button"
+               app:strokeWidth="2dp"
+
+               tools:layout_editor_absoluteX="156dp"
+               tools:layout_editor_absoluteY="79dp" />
+
+           <com.google.android.material.button.MaterialButton
+               android:id="@+id/cancel_button"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:backgroundTint="@color/white"
+               android:text="@string/cancel_button"
+               android:textColor="@color/delete_dialog_button"
+               app:strokeColor="@color/delete_dialog_button"
+               app:strokeWidth="2dp"
+
+               tools:layout_editor_absoluteX="156dp"
+               tools:layout_editor_absoluteY="79dp" />
+       </LinearLayout>
+
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

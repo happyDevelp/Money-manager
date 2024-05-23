@@ -23,4 +23,18 @@ interface DAO {
      @Query("delete from transaction_table where id = :id")
      fun deleteTransactionById(id: Int)
 
+     @Query("update transaction_table set amount=:amount, transaction_type=:transactionType," +
+             " transaction_category=:transactionCategory, wallet=:wallet, date_of_transaction=:dateOfTransaction," +
+             " comment=:comment, image_uri=:imageUri where id=:id")
+     fun updateTransactionById(
+         amount: Int,
+         transactionType: String,
+         transactionCategory: String,
+         wallet: String,
+         dateOfTransaction: String,
+         comment: String?,
+         imageUri: String?,
+         id: Int
+     )
+
 }
