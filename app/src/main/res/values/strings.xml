@@ -54,4 +54,8 @@
     <string name="describe_text_comfriming_delete">Are you shure you want to delete?</string>
     <string name="delete">Delete</string>
     <string name="cancel_button">Cancel</string>
+    <string name="switch_state_on">On</string>
+    <string name="switch_state_off">Off</string>
+    <string name="use_percent_switch">Use percent</string>
+    <string name="chart_spend_text">Витрати</string>
 </resources>

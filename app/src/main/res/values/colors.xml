@@ -6,5 +6,9 @@
     <color name="item_transaction">#FAF7F1</color>
     <color name="small_text">#C4000000</color>
     <color name="delete_dialog_button">#834412</color>
+    <color name="selected_tab_item">#833806</color>
+    <color name="tab_text_color">#C16C34</color>
+    <color name="btn_income">#B6E4B7</color>
+    <color name="btn_spend">#E6C3C3</color>
 
 </resources>

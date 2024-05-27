@@ -10,6 +10,8 @@ class DatabaseRepository(private val dao: DAO) {
 
     fun getTransactionById(id: Int) = dao.getTransactionById(id)
 
+    fun getTransactionsByType(type: String): List<TransactionEntity> = dao.getTransactionsByType(type)
+
     fun deleteAllTransactions() = dao.deleteAllTransactions()
 
     fun deleteTransactionById(id: Int) = dao.deleteTransactionById(id)

@@ -55,4 +55,9 @@
             android:id="@+id/action_detailsFragment_to_addingFragment"
             app:destination="@id/addingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/pieChartFragment"
+        android:name="com.example.moneymanager.PieChart.PieChartFragment"
+        android:label="fragment_pie_chart"
+        tools:layout="@layout/fragment_pie_chart" />
 </navigation>

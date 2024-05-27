@@ -17,6 +17,9 @@ interface DAO {
     @Query("select * from transaction_table where id = :id")
     fun getTransactionById(id: Int): TransactionEntity
 
+    @Query("select * from transaction_table where transaction_type = :type")
+    fun getTransactionsByType(type: String): List<TransactionEntity> //return income or spent
+
      @Query("delete from transaction_table")
      fun deleteAllTransactions()
 

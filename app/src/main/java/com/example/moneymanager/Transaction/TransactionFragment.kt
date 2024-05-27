@@ -43,16 +43,7 @@ class TransactionFragment : Fragment() {
             }
         })
 
-        //test uri from db
-/*         lifecycleScope.launch {
-             val picUri = viewModel.getTransactionById(1).imageUri
-             binding.testImage.setImageURI(picUri.toUri())
-        }*/
-
-       /* navigationToAdding()*/
         binding.floatAddButton.setOnClickListener { viewModel.navigationToAdding() }
-
     }
-
 
 }

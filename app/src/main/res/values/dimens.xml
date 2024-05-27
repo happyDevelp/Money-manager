@@ -2,4 +2,5 @@
 <resources>
     <dimen name="spacing_normal">8dp</dimen>
     <dimen name="fr_adding_normal_spacing">12dp</dimen>
+    <dimen name="indentation_from_the_bottom_menu">80dp</dimen>
 </resources>
