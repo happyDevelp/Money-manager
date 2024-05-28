@@ -62,24 +62,27 @@
         app:layout_constraintTop_toBottomOf="@+id/firstLinearLayout">
 
         <TextView
+            android:id="@+id/txt_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/income"
+            tools:text="Дохід\n0,00"
             android:textAlignment="center" />
 
         <TextView
+            android:id="@+id/txt_spend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/spent"
+            android:text="Витрати\n0,00"
             android:textAlignment="center" />
 
         <TextView
+            android:id="@+id/txt_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/balance"
+            android:text="Баланс\n0,00"
             android:textAlignment="center" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -106,7 +109,6 @@
         android:backgroundTint="#FB8C00"
         android:importantForAccessibility="no"
         android:src="@drawable/plus_icon"
-
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

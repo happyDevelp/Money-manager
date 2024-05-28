@@ -16,6 +16,9 @@ class DatabaseRepository(private val dao: DAO) {
 
     fun deleteTransactionById(id: Int) = dao.deleteTransactionById(id)
 
+    fun getSumByType(type: String): Int = dao.getSumByType(type)
+
+
     fun updateTransaction(
         amount: Int,
         transactionType: String,

@@ -1,13 +1,10 @@
 <resources>
     <string name="app_name">Money manager</string>
-    <string name="income">Дохід\n0,00</string>
-    <string name="spent">Витрати\n0,00</string>
-    <string name="balance">Баланс\n0,00</string>
+
     <string name="menu_transaction">Операції</string>
     <string name="menu_graph">Графіки</string>
     <string name="menu_money">Рахунки</string>
     <string name="menu_more">Більше</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_transaction">Add transaction</string>
     <string name="spent_adding">Витрати</string>
@@ -58,4 +55,7 @@
     <string name="switch_state_off">Off</string>
     <string name="use_percent_switch">Use percent</string>
     <string name="chart_spend_text">Витрати</string>
+    <string name="income_cell">%1$s\n%2$s ₴</string>
+    <string name="spend_cell">%1$s\n%2$s ₴</string>
+    <string name="balance_cell">Баланс\n%1$s ₴</string>
 </resources>

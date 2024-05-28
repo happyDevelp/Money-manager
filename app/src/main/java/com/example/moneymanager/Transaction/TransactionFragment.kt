@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moneymanager.R
 import com.example.moneymanager.TransactionAdapter.TransactionAdapter
 import com.example.moneymanager.databinding.FragmentTransactionBinding
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.DecimalFormat
 
 class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding
@@ -44,6 +48,25 @@ class TransactionFragment : Fragment() {
         })
 
         binding.floatAddButton.setOnClickListener { viewModel.navigationToAdding() }
+
+        fillCells()
+    }
+
+    private fun fillCells() {
+        lifecycleScope.launch {
+            val income = viewModel.getSumByType(getString(R.string.income_adding))
+            val spend = viewModel.getSumByType(getString(R.string.spent_adding))
+            val balance = income - spend
+
+            binding.txtIncome.text = getString(R.string.income_cell, getString(R.string.income_adding), income.delimiterFormat())
+            binding.txtSpend.text = getString(R.string.spend_cell, getString(R.string.spent_adding), spend.delimiterFormat())
+            binding.txtBalance.text = getString(R.string.balance_cell, balance.delimiterFormat())
+        }
+    }
+
+    private fun Int.delimiterFormat():String {
+        val numberFormat = DecimalFormat("##,###")
+        return numberFormat.format(this)
     }
 
 }

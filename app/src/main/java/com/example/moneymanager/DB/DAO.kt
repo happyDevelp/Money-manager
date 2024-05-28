@@ -26,6 +26,9 @@ interface DAO {
      @Query("delete from transaction_table where id = :id")
      fun deleteTransactionById(id: Int)
 
+     @Query("select SUM(amount) from transaction_table where transaction_type =:type")
+     fun getSumByType(type: String): Int
+
      @Query("update transaction_table set amount=:amount, transaction_type=:transactionType," +
              " transaction_category=:transactionCategory, wallet=:wallet, date_of_transaction=:dateOfTransaction," +
              " comment=:comment, image_uri=:imageUri where id=:id")
