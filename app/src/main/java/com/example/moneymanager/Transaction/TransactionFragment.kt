@@ -31,7 +31,16 @@ class TransactionFragment : Fragment() {
         binding.recycleView.adapter = adapter
         binding.recycleView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.transactions.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewModel.transactions.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+            if (it.isEmpty()) {
+                binding.txtNoDataInfo.visibility = View.VISIBLE
+                binding.hintArrow.visibility = View.VISIBLE
+            } else {
+                binding.txtNoDataInfo.visibility = View.INVISIBLE
+                binding.hintArrow.visibility = View.INVISIBLE
+            }
+        }
 
         viewModel.navigationStatus.observe(viewLifecycleOwner) {
             it?.let {

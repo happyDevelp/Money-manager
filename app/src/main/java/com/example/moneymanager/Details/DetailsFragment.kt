@@ -1,4 +1,4 @@
-package com.example.moneymanager.DetailsFragment
+package com.example.moneymanager.Details
 
 import android.app.Dialog
 import android.os.Bundle
@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.moneymanager.DB.TransactionEntity
-import com.example.moneymanager.DetailsFragment.DetailUtils.editItem
+import com.example.moneymanager.Details.DetailUtils.editItem
 import com.example.moneymanager.R
 import com.example.moneymanager.databinding.FragmentDetailsBinding
 import kotlinx.coroutines.launch

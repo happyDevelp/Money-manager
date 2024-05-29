@@ -11,7 +11,7 @@
         android:title="@string/menu_graph" />
 
     <item
-        android:id="@+id/more"
+        android:id="@+id/settingsFragment"
         android:icon="@drawable/dots_icon"
         android:title="@string/menu_more" />
 

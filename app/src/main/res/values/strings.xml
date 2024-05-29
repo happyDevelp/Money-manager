@@ -58,4 +58,8 @@
     <string name="income_cell">%1$s\n%2$s ₴</string>
     <string name="spend_cell">%1$s\n%2$s ₴</string>
     <string name="balance_cell">Баланс\n%1$s ₴</string>
+    <string name="settings_wipe_data">Wipe data</string>
+    <string name="confirm_wipe_all_data">Confirm wipe all data</string>
+    <string name="title_wipe_all_data">Are you shure you want to wipe all data?</string>
+    <string name="hint_no_data_to_display">No data to display\n \n \n Click \'+\' to add new transaction</string>
 </resources>

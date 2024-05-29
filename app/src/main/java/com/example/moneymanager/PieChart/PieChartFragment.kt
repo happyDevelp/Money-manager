@@ -25,13 +25,14 @@ class PieChartFragment : Fragment() {
     lateinit var binding: FragmentPieChartBinding
     val viewModel: PieChartViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentPieChartBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         showChart(getString(R.string.income_adding))
         legendSetup()
 
@@ -44,35 +45,41 @@ class PieChartFragment : Fragment() {
         val categories = mutableMapOf<String, Int>()
 
         lifecycleScope.launch {
-                transactions = viewModel.getTransactionsByType(transactionType)
+            transactions = viewModel.getTransactionsByType(transactionType)
 
-                for (item in transactions) {
-                    if (!categories.containsKey(item.transactionCategory))
-                        categories.put(item.transactionCategory, item.amount)
-                    else
-                        categories[item.transactionCategory] = categories[item.transactionCategory]!!.plus(item.amount)
-                }
+            //Check if there are no data then show the corresponding text
+            if (transactions.isEmpty()) binding.txtNoDataInfo.visibility = View.VISIBLE
+            else binding.txtNoDataInfo.visibility = View.INVISIBLE
 
-                val entriesList = mutableListOf<PieEntry>()
+            for (item in transactions) {
+                if (!categories.containsKey(item.transactionCategory))
+                    categories.put(item.transactionCategory, item.amount)
+                else
+                    categories[item.transactionCategory] =
+                        categories[item.transactionCategory]!!.plus(item.amount)
+            }
 
-                for (item in categories) {
-                    entriesList.add(PieEntry(item.value.toFloat(), item.key))
-                    Log.i("TestPie", entriesList.toString())
-                }
 
-                val pieDataSet = PieDataSet(entriesList, null)
+            val entriesList = mutableListOf<PieEntry>()
 
-                val colors = listOf(
-                    Color.rgb(193, 37, 82), Color.rgb(255, 102, 0), Color.rgb(245, 199, 0),
-                    Color.rgb(106, 150, 31), Color.rgb(179, 100, 53)
-                )
+            for (item in categories) {
+                entriesList.add(PieEntry(item.value.toFloat(), item.key))
+                Log.i("TestPie", entriesList.toString())
+            }
 
-                pieDatasetSetup(pieDataSet, colors)
+            val pieDataSet = PieDataSet(entriesList, null)
 
-                val pieData = PieData(pieDataSet)
-                pieChartSetup(pieData)
+            val colors = listOf(
+                Color.rgb(193, 37, 82), Color.rgb(255, 102, 0), Color.rgb(245, 199, 0),
+                Color.rgb(106, 150, 31), Color.rgb(179, 100, 53)
+            )
 
-                switchStateClickListener(pieDataSet)
+            pieDatasetSetup(pieDataSet, colors)
+
+            val pieData = PieData(pieDataSet)
+            pieChartSetup(pieData)
+
+            switchStateClickListener(pieDataSet)
         }
     }
 

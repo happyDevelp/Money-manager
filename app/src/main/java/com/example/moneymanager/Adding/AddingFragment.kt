@@ -21,7 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.moneymanager.DB.TransactionEntity
-import com.example.moneymanager.DetailsFragment.DetailUtils
+import com.example.moneymanager.Details.DetailUtils
 import com.example.moneymanager.Income.IncomeFragment
 import com.example.moneymanager.Income.UtilManager
 import com.example.moneymanager.Income.UtilManager.amountIsNotNull

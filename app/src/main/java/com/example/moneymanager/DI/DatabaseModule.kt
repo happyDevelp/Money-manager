@@ -3,8 +3,9 @@ package com.example.moneymanager.DI
 import com.example.moneymanager.Adding.AddingViewModel
 import com.example.moneymanager.DB.DAO
 import com.example.moneymanager.DB.DataBase
-import com.example.moneymanager.DetailsFragment.DetailsViewModel
+import com.example.moneymanager.Details.DetailsViewModel
 import com.example.moneymanager.PieChart.PieChartViewModel
+import com.example.moneymanager.Settings.SettingsViewModel
 import com.example.moneymanager.Transaction.TransactionViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -20,4 +21,5 @@ val dataBaseModule = module {
     viewModel { AddingViewModel(repository = get()) }
     viewModel { DetailsViewModel(repository = get()) }
     viewModel { PieChartViewModel(repository = get()) }
+    viewModel { SettingsViewModel(repository = get()) }
 }

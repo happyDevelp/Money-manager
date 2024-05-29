@@ -43,7 +43,7 @@
         tools:layout="@layout/fragment_spending" />
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.moneymanager.DetailsFragment.DetailsFragment"
+        android:name="com.example.moneymanager.Details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <argument android:name="itemId"
@@ -60,4 +60,9 @@
         android:name="com.example.moneymanager.PieChart.PieChartFragment"
         android:label="fragment_pie_chart"
         tools:layout="@layout/fragment_pie_chart" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.moneymanager.Settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

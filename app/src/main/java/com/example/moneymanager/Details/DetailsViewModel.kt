@@ -1,4 +1,4 @@
-package com.example.moneymanager.DetailsFragment
+package com.example.moneymanager.Details
 
 import androidx.lifecycle.ViewModel
 import com.example.moneymanager.DB.TransactionEntity
