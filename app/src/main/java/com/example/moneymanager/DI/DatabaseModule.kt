@@ -4,6 +4,7 @@ import com.example.moneymanager.Adding.AddingViewModel
 import com.example.moneymanager.DB.DAO
 import com.example.moneymanager.DB.DataBase
 import com.example.moneymanager.Details.DetailsViewModel
+import com.example.moneymanager.Favourites.FavouritesViewModel
 import com.example.moneymanager.PieChart.PieChartViewModel
 import com.example.moneymanager.Settings.SettingsViewModel
 import com.example.moneymanager.Transaction.TransactionViewModel
@@ -22,4 +23,5 @@ val dataBaseModule = module {
     viewModel { DetailsViewModel(repository = get()) }
     viewModel { PieChartViewModel(repository = get()) }
     viewModel { SettingsViewModel(repository = get()) }
+    viewModel { FavouritesViewModel(repository = get()) }
 }

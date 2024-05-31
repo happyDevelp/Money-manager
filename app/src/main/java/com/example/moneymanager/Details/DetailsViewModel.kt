@@ -20,4 +20,10 @@ class DetailsViewModel(private val repository: DatabaseRepository) : ViewModel()
         }
     }
 
+    suspend fun changeFavState(isFav: Boolean, id: Int) {
+        withContext(Dispatchers.IO) {
+            repository.changeFavState(isFav, id)
+        }
+    }
+
 }

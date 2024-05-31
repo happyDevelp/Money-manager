@@ -28,9 +28,11 @@
             android:textSize="18sp" />
 
         <ImageView
+            android:id="@+id/btn_favourite"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginEnd="16dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/favorite_icon"
             tools:ignore="ContentDescription" />
 
@@ -48,6 +50,7 @@
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat"

@@ -155,10 +155,10 @@ class AddingFragment : Fragment() {
                 val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
                 val current = dateFormat.format(calendar.time)
                 val comment = binding.commentEt.text.toString()
-                val imageUri: String? = saveImage(viewModel.imageGalleryUri)
+                val imageUri: String = saveImage(viewModel.imageGalleryUri)
 
                 val transactionUnit =
-                    TransactionEntity(0, amount, type, category, wallet, current, comment, imageUri)
+                    TransactionEntity(0, amount, type, category, wallet, current, comment, imageUri, false)
 
                 //bad idea using editItem?
                 if (!DetailUtils.editItem) { viewModel.pushTransaction(transactionUnit) }

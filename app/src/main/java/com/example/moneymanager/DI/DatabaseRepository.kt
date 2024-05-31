@@ -1,5 +1,6 @@
 package com.example.moneymanager.DI
 
+import androidx.lifecycle.LiveData
 import com.example.moneymanager.DB.DAO
 import com.example.moneymanager.DB.TransactionEntity
 
@@ -18,6 +19,9 @@ class DatabaseRepository(private val dao: DAO) {
 
     fun getSumByType(type: String): Int = dao.getSumByType(type)
 
+    fun changeFavState(newFavValue: Boolean, id: Int) = dao.changeFavState(newFavValue, id)
+
+    fun getAllFavourites(): LiveData<List<TransactionEntity>> = dao.getAllFavourites()
 
     fun updateTransaction(
         amount: Int,

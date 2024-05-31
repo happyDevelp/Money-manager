@@ -21,6 +21,8 @@ data class TransactionEntity (
 
     @ColumnInfo(name = "comment") val comment: String?,
 
-    @ColumnInfo(name = "image_uri") val imageUri: String?
+    @ColumnInfo(name = "image_uri") val imageUri: String?,
+
+    @ColumnInfo(name = "is_fav") val isFav: Boolean
 
 )

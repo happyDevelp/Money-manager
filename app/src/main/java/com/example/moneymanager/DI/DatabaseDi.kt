@@ -9,6 +9,7 @@ fun provideDatabase(context: Context) = Room.databaseBuilder(
     DataBase::class.java,
     "database"
 )
+    .fallbackToDestructiveMigration()
     .build()
 
 fun provideDao(db: DataBase) = db.DAO

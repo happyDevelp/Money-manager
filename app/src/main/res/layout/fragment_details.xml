@@ -54,17 +54,32 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp"
+                android:background="?android:selectableItemBackgroundBorderless"
                 android:padding="8dp"
                 android:src="@drawable/edit_icon"
                 android:tooltipText="@string/hint_edit"
-                android:background="?android:selectableItemBackgroundBorderless"
 
 
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.725"
+                app:layout_constraintHorizontal_bias="0.87"
                 app:layout_constraintStart_toEndOf="@+id/txtTransactionDetail"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription,ImageContrastCheck" />
+
+            <ImageView
+                android:id="@+id/btn_favourite"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="?selectableItemBackgroundBorderless"
+
+                android:src="@drawable/favorite_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/edit_icon"
+                app:layout_constraintHorizontal_bias="0.61"
+                app:layout_constraintStart_toEndOf="@+id/txtTransactionDetail"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.49"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -218,14 +233,14 @@
                     android:id="@+id/txt_selected_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/amiko"
-                    tools:text="Зарплата"
                     android:textColor="@color/black"
-
                     android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_category" />
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_category"
+                    tools:text="Зарплата" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <!--                    app:layout_constraintStart_toEndOf="@+id/category_imv"-->
 

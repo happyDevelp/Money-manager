@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moneymanager.DB.TransactionEntity
 import com.example.moneymanager.R
 import com.example.moneymanager.TransactionAdapter.TransactionAdapter
 import com.example.moneymanager.databinding.FragmentTransactionBinding
@@ -31,16 +32,7 @@ class TransactionFragment : Fragment() {
         binding.recycleView.adapter = adapter
         binding.recycleView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.transactions.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            if (it.isEmpty()) {
-                binding.txtNoDataInfo.visibility = View.VISIBLE
-                binding.hintArrow.visibility = View.VISIBLE
-            } else {
-                binding.txtNoDataInfo.visibility = View.INVISIBLE
-                binding.hintArrow.visibility = View.INVISIBLE
-            }
-        }
+        viewModel.transactions.observe(viewLifecycleOwner) { updateAdapterList(adapter, it) }
 
         viewModel.navigationStatus.observe(viewLifecycleOwner) {
             it?.let {
@@ -49,16 +41,35 @@ class TransactionFragment : Fragment() {
             }
         }
 
+        binding.floatAddButton.setOnClickListener { viewModel.navigationToAdding() }
+
+        binding.btnFavourite.setOnClickListener {
+            findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToFavouritesFragment())
+        }
+
+        itemRWClickListener(adapter)
+        fillCells()
+
+    }
+
+    private fun itemRWClickListener(adapter: TransactionAdapter) {
         adapter.setOnClickListener(object : TransactionAdapter.OnClickListener {
             override fun onItemClick(itemId: Int) {
                 findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToDetailsFragment(itemId))
                 viewModel.navigationComplete()
             }
         })
+    }
 
-        binding.floatAddButton.setOnClickListener { viewModel.navigationToAdding() }
-
-        fillCells()
+    private fun updateAdapterList(adapter: TransactionAdapter, it: List<TransactionEntity>) {
+        adapter.submitList(it)
+        if (it.isEmpty()) {
+            binding.txtNoDataInfo.visibility = View.VISIBLE
+            binding.hintArrow.visibility = View.VISIBLE
+        } else {
+            binding.txtNoDataInfo.visibility = View.INVISIBLE
+            binding.hintArrow.visibility = View.INVISIBLE
+        }
     }
 
     private fun fillCells() {

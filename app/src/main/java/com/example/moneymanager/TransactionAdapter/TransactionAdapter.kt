@@ -17,7 +17,7 @@ class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.Tran
         this.listener = listener
     }
 
-    // Declaring the interface in adapter or we can declare it in seperate file
+    // Declaring the interface in adapter or we can declare it in separate file
     interface OnClickListener {
         fun onItemClick(itemId: Int)
     }
@@ -43,9 +43,11 @@ class TransactionAdapter: ListAdapter<TransactionEntity, TransactionAdapter.Tran
 
     private class DiffCallBack: DiffUtil.ItemCallback<TransactionEntity>() {
 
-        override fun areItemsTheSame(oldItem: TransactionEntity, newItem: TransactionEntity): Boolean = oldItem == newItem
+        override fun areItemsTheSame(oldItem: TransactionEntity, newItem: TransactionEntity): Boolean =
+            oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: TransactionEntity, newItem: TransactionEntity): Boolean = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: TransactionEntity, newItem: TransactionEntity): Boolean =
+            oldItem.id == newItem.id
     }
 
 

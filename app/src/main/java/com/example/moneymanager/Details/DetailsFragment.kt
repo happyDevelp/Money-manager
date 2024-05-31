@@ -24,9 +24,9 @@ class DetailsFragment : Fragment() {
     private val args: DetailsFragmentArgs by navArgs()
     private val viewModel: DetailsViewModel by viewModel()
 
-    lateinit var dialog: Dialog
-    lateinit var btnDialogCancel: Button
-    lateinit var btnDialogDelete: Button
+    private lateinit var dialog: Dialog
+    private lateinit var btnDialogCancel: Button
+    private lateinit var btnDialogDelete: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetailsBinding.inflate(layoutInflater)
@@ -41,17 +41,12 @@ class DetailsFragment : Fragment() {
         lifecycleScope.launch {
             item = viewModel.getTransactionById(itemId)
 
-            with(binding) {
-                txtNumericAmount.text = getString(R.string.amount_details, item.amount.toString())
-                txtActuallyTypeOfTransaction.text = item.transactionType
-                txtSelectedCategory.text = item.transactionCategory
+            if (item.isFav) binding.btnFavourite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.favorite_icon_red))
+            else binding.btnFavourite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.favorite_icon))
 
-                if (item.comment != "") txtActuallyComment.text = item.comment
-                txtActuallyDateOfTransaction.text = item.dateOfTransaction
+            binding.btnFavourite.setOnClickListener { favouriteUpdate(itemId) }
 
-                if (item.imageUri == "no photo") txtPhoto.visibility = View.GONE
-                categoryPhoto.setImageURI(item.imageUri?.toUri())
-            }
+            setupViews(item)
         }
 
         binding.backArrow.setOnClickListener {
@@ -67,6 +62,39 @@ class DetailsFragment : Fragment() {
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToAddingFragment())
         }
 
+    }
+
+    private fun setupViews(item: TransactionEntity) {
+        with(binding) {
+            txtNumericAmount.text = getString(R.string.amount_details, item.amount.toString())
+            txtActuallyTypeOfTransaction.text = item.transactionType
+            txtSelectedCategory.text = item.transactionCategory
+
+            if (item.comment != "") txtActuallyComment.text = item.comment
+            txtActuallyDateOfTransaction.text = item.dateOfTransaction
+
+            if (item.imageUri == "no photo") txtPhoto.visibility = View.GONE
+            categoryPhoto.setImageURI(item.imageUri?.toUri())
+        }
+    }
+
+    private fun favouriteUpdate(itemId: Int) {
+        lifecycleScope.launch {
+            val myItem = viewModel.getTransactionById(itemId)
+            if (myItem.isFav) {
+                binding.btnFavourite.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.favorite_icon)
+                )
+                viewModel.changeFavState(false, itemId)
+            } else {
+                binding.btnFavourite.setImageDrawable(
+                    ContextCompat.getDrawable(requireContext(), R.drawable.favorite_icon_red)
+                )
+                viewModel.changeFavState(true, itemId)
+            }
+        }
     }
 
     private fun dialogDelete(itemId: Int) {
@@ -96,7 +124,7 @@ class DetailsFragment : Fragment() {
 
 }
 
-object DetailUtils{
+object DetailUtils {
     var editItem: Boolean = false
     var id: Int = 0
 }
