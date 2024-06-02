@@ -24,16 +24,12 @@ class TransactionViewModel(private val repository: DatabaseRepository) : ViewMod
     suspend fun getSumByType(type: String): Int {
         return withContext(Dispatchers.IO) {repository.getSumByType(type)}
     }
-    suspend fun getAllTransactions(): LiveData<List<TransactionEntity>> {
-        return withContext(Dispatchers.IO) { repository.getAllTransactions() }
-    }
 
-    suspend fun getTransactionById(id: Int): TransactionEntity {
-        return withContext(Dispatchers.IO) { repository.getTransactionById(id) }
-    }
-
-    suspend fun deleteAllTransactions() {
-        withContext(Dispatchers.IO) { repository.deleteAllTransactions() }
+/*
+    val searchTransactions: LiveData<List<TransactionEntity>> = repository
+*/
+    suspend fun searchTransaction(query: String): List<TransactionEntity> {
+        return withContext(Dispatchers.IO) { repository.searchTransaction(query) }
     }
 
     fun navigationToAdding() { _navigationStatus.value = true }

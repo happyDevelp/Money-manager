@@ -52,10 +52,11 @@ class FavouritesAdapter(private val viewModel: FavouritesViewModel, private val 
                 transactionEntity.amount.toString()
             )
             binding.transactionMethod.text = transactionEntity.wallet
-            binding.transactionType.text = itemView.resources.getString(
-                R.string.type_transaction,
-                transactionEntity.transactionType
-            )
+            if (transactionEntity.transactionType == "Дохід")
+                binding.transactionType.text = itemView.resources.getString(R.string.type_transaction_income, transactionEntity.transactionType)
+            else
+                binding.transactionType.text = itemView.resources.getString(R.string.type_transaction_spend, transactionEntity.transactionType)
+
             binding.transactionCategory.text = transactionEntity.transactionCategory
             binding.txtDateOfTransaction.text =
                 transactionEntity.dateOfTransaction.substringBefore(" ")

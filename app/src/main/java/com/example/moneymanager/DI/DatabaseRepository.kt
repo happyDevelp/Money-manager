@@ -23,6 +23,8 @@ class DatabaseRepository(private val dao: DAO) {
 
     fun getAllFavourites(): LiveData<List<TransactionEntity>> = dao.getAllFavourites()
 
+    fun searchTransaction(query: String): List<TransactionEntity> = dao.searchTransaction(query)
+
     fun updateTransaction(
         amount: Int,
         transactionType: String,

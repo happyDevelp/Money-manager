@@ -26,10 +26,10 @@
     <string name="select_account">Обрати рахунок</string>
     <string name="hint_back_arrow">Back</string>
     <string name="hint_calendar">Обрати дату</string>
-    <string name="salary_item">💰Зарплата</string>
     <string name="UAH">"₴ "</string>
     <string name="amount_transaction">₴ %1$s</string>
-    <string name="type_transaction">💰%1$s</string>
+    <string name="type_transaction_income">💰%1$s</string>
+    <string name="type_transaction_spend">💸%1$s</string>
     <string name="food">Їжа</string>
     <string name="clothes">Одяг</string>
     <string name="Technique">Техніка</string>
@@ -64,4 +64,7 @@
     <string name="hint_no_data_to_display">No data to display\n \n \n Click \'+\' to add new transaction</string>
     <string name="favourites">Favourites</string>
     <string name="no_favourite_transactions_yet">No favourite transactions yet</string>
+    <string name="photo">Фото</string>
+    <string name="no_comment">No comment</string>
+    <string name="no_photo">No saved photo</string>
 </resources>

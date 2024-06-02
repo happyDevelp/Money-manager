@@ -41,8 +41,7 @@ class DetailsFragment : Fragment() {
         lifecycleScope.launch {
             item = viewModel.getTransactionById(itemId)
 
-            if (item.isFav) binding.btnFavourite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.favorite_icon_red))
-            else binding.btnFavourite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.favorite_icon))
+            checkIsFavourite(item)
 
             binding.btnFavourite.setOnClickListener { favouriteUpdate(itemId) }
 
@@ -64,6 +63,21 @@ class DetailsFragment : Fragment() {
 
     }
 
+    private fun checkIsFavourite(item: TransactionEntity) {
+        if (item.isFav) binding.btnFavourite.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.favorite_icon_red
+            )
+        )
+        else binding.btnFavourite.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.favorite_icon
+            )
+        )
+    }
+
     private fun setupViews(item: TransactionEntity) {
         with(binding) {
             txtNumericAmount.text = getString(R.string.amount_details, item.amount.toString())
@@ -73,7 +87,7 @@ class DetailsFragment : Fragment() {
             if (item.comment != "") txtActuallyComment.text = item.comment
             txtActuallyDateOfTransaction.text = item.dateOfTransaction
 
-            if (item.imageUri == "no photo") txtPhoto.visibility = View.GONE
+            if (item.imageUri == "no photo") txtNoPhoto.visibility = View.VISIBLE
             categoryPhoto.setImageURI(item.imageUri?.toUri())
         }
     }
@@ -82,11 +96,7 @@ class DetailsFragment : Fragment() {
         lifecycleScope.launch {
             val myItem = viewModel.getTransactionById(itemId)
             if (myItem.isFav) {
-                binding.btnFavourite.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.favorite_icon)
-                )
+                binding.btnFavourite.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.favorite_icon))
                 viewModel.changeFavState(false, itemId)
             } else {
                 binding.btnFavourite.setImageDrawable(

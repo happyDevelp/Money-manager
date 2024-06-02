@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
 
         lockScreenOrientation() // disable rotate screen
 
-
         val navController = findNavController(R.id.nav_host_fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
     }

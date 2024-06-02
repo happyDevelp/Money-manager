@@ -22,7 +22,7 @@
 
             android:layout_marginTop="16dp"
             android:fontFamily="@font/balsamiq_sans"
-            android:text="29.05.2024"
+            tools:text="29.05.2024"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,12 +35,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/salary_item"
+            tools:text="💸Витрати"
             android:fontFamily="@font/balsamiq_sans"
-
-
             android:textSize="16sp"
-
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/spent_adding"
+            tools:text="Їжа"
             android:textSize="16sp"
             android:fontFamily="@font/balsamiq_sans"
 

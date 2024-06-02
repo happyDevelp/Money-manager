@@ -35,6 +35,14 @@ interface DAO {
     @Query("select * from transaction_table where is_fav = 1")
     fun getAllFavourites(): LiveData<List<TransactionEntity>>
 
+    @Query("select * from transaction_table where (transaction_category like :query) " +
+            "or (amount like :query)" +
+            "or (wallet like :query)" +
+            "or (transaction_type like :query)" +
+            "or (date_of_transaction like :query)")
+    fun searchTransaction(query: String): List<TransactionEntity>
+
+
      @Query("update transaction_table set amount=:amount, transaction_type=:transactionType," +
              " transaction_category=:transactionCategory, wallet=:wallet, date_of_transaction=:dateOfTransaction," +
              " comment=:comment, image_uri=:imageUri where id=:id")

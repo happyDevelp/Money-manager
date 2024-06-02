@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -47,9 +48,27 @@ class TransactionFragment : Fragment() {
             findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToFavouritesFragment())
         }
 
+
+        searchInputTextListener(adapter)
+
         itemRWClickListener(adapter)
         fillCells()
 
+    }
+
+    private fun searchInputTextListener(adapter: TransactionAdapter) {
+        binding.btnSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = true
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                lifecycleScope.launch {
+                    if (newText != null)
+                        adapter.submitList(viewModel.searchTransaction("%${newText}%"))
+                }
+                return true
+            }
+        })
     }
 
     private fun itemRWClickListener(adapter: TransactionAdapter) {
