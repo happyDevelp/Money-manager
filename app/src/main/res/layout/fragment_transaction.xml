@@ -11,7 +11,6 @@
         android:id="@+id/firstLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
         android:layout_marginTop="12dp"
         android:padding="4dp"
 
@@ -19,12 +18,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="test_calendar"
-            android:textSize="18sp" />
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/month_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_chevron_left_24" />
+
+
+            <TextView
+                android:id="@+id/tv_month"
+                android:layout_width="87dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="2dp"
+
+                tools:text="Jun. 2024"
+                android:textSize="18sp"
+                android:fontFamily="@font/balsamiq_sans" />
+
+            <ImageView
+                android:id="@+id/month_forward"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_chevron_right_24" />
+        </LinearLayout>
+
+
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/btn_search"
@@ -42,8 +69,6 @@
             android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/favorite_icon"
             tools:ignore="ContentDescription" />
-
-
 
 
         <!--      <CalendarView

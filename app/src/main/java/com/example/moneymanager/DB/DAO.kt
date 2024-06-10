@@ -17,6 +17,10 @@ interface DAO {
     @Query("select * from transaction_table where id = :id")
     fun getTransactionById(id: Int): TransactionEntity
 
+    @Query("select * from transaction_table where (strftime('%m', date_of_transaction) = :month " +
+            "and strftime('%Y', date_of_transaction) = :yearNum)")
+    fun getTransactionByMonth(month: String, yearNum: String): List<TransactionEntity>
+
     @Query("select * from transaction_table where transaction_type = :type")
     fun getTransactionsByType(type: String): List<TransactionEntity> //return income or spent
 
@@ -26,8 +30,9 @@ interface DAO {
      @Query("delete from transaction_table where id = :id")
      fun deleteTransactionById(id: Int)
 
-     @Query("select SUM(amount) from transaction_table where transaction_type =:type")
-     fun getSumByType(type: String): Int
+     @Query("select SUM(amount) from transaction_table where transaction_type =:type " +
+             "and strftime('%m', date_of_transaction) = :month and strftime('%Y', date_of_transaction) = :yearNum")
+     fun getMonthSumByType(type: String, month: String, yearNum: String): Int
 
     @Query("update transaction_table set is_fav =:newFavValue where id =:id")
     fun changeFavState(newFavValue: Boolean, id: Int)

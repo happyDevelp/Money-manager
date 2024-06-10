@@ -17,13 +17,15 @@ class DatabaseRepository(private val dao: DAO) {
 
     fun deleteTransactionById(id: Int) = dao.deleteTransactionById(id)
 
-    fun getSumByType(type: String): Int = dao.getSumByType(type)
+    fun getMonthSumByType(type: String, month: String, year: String): Int = dao.getMonthSumByType(type, month, year)
 
     fun changeFavState(newFavValue: Boolean, id: Int) = dao.changeFavState(newFavValue, id)
 
     fun getAllFavourites(): LiveData<List<TransactionEntity>> = dao.getAllFavourites()
 
     fun searchTransaction(query: String): List<TransactionEntity> = dao.searchTransaction(query)
+
+    fun getTransactionsByMonth(month: String, yearNum: String): List<TransactionEntity> = dao.getTransactionByMonth(month, yearNum)
 
     fun updateTransaction(
         amount: Int,

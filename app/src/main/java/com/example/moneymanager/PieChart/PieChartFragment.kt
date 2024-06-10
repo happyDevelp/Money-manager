@@ -87,7 +87,6 @@ class PieChartFragment : Fragment() {
         it.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.btn_spend))
         binding.incomeBtn.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.thick_outline)
-        binding.title.text = getString(R.string.spent_adding)
         showChart(getString(R.string.spent_adding))
         binding.chart.invalidate()
     }
@@ -96,7 +95,6 @@ class PieChartFragment : Fragment() {
         it.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.btn_income))
         binding.spendBtn.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.thick_outline)
-        binding.title.text = getString(R.string.income_adding)
         showChart(getString(R.string.income_adding))
         binding.chart.invalidate()
     }

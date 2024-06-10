@@ -17,12 +17,13 @@ class MainActivity : AppCompatActivity() {
 
         lockScreenOrientation() // disable rotate screen
 
+        //setup BottomnavigationView
         val navController = findNavController(R.id.nav_host_fragment)
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
     private fun lockScreenOrientation() {
-        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT //lock phone rotation
     }
 
 }

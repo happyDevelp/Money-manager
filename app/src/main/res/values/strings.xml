@@ -67,4 +67,7 @@
     <string name="photo">Фото</string>
     <string name="no_comment">No comment</string>
     <string name="no_photo">No saved photo</string>
+    <string name="calendar_month_year">%1$s %2$s</string>
+    <string name="date_pattern">yyyy-MM-dd</string>
+    <string name="txt_diagrama_topPannel">Діаграма</string>
 </resources>

@@ -152,7 +152,7 @@ class AddingFragment : Fragment() {
                 }
 
                 val wallet = "main"
-                val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
+                val dateFormat = SimpleDateFormat(getString(R.string.date_pattern), Locale.getDefault())
                 val current = dateFormat.format(calendar.time)
                 val comment = binding.commentEt.text.toString()
                 val imageUri: String = saveImage(viewModel.imageGalleryUri)
@@ -167,7 +167,6 @@ class AddingFragment : Fragment() {
                     DetailUtils.editItem = false
                     DetailUtils.id = 0
                 }
-
 
                 UtilManager.reset()
                 findNavController().navigate(AddingFragmentDirections.actionAddingFragmentToTransactionFragment())

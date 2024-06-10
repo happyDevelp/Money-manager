@@ -16,10 +16,12 @@ import com.example.moneymanager.databinding.FragmentTransactionBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
+import java.util.Calendar
 
 class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding
     private val viewModel: TransactionViewModel by viewModel()
+    private val calendar = Calendar.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentTransactionBinding.inflate(layoutInflater)
@@ -33,7 +35,9 @@ class TransactionFragment : Fragment() {
         binding.recycleView.adapter = adapter
         binding.recycleView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.transactions.observe(viewLifecycleOwner) { updateAdapterList(adapter, it) }
+        viewModel.transactions.observe(viewLifecycleOwner) { checkDataExist(it) }
+
+            lifecycleScope.launch { monthView(adapter) }
 
         viewModel.navigationStatus.observe(viewLifecycleOwner) {
             it?.let {
@@ -48,12 +52,91 @@ class TransactionFragment : Fragment() {
             findNavController().navigate(TransactionFragmentDirections.actionTransactionFragmentToFavouritesFragment())
         }
 
-
         searchInputTextListener(adapter)
-
         itemRWClickListener(adapter)
-        fillCells()
+    }
 
+    private suspend fun TransactionFragment.monthView(adapter: TransactionAdapter) {
+        val monthList = listOf<String>(
+            "Jan.", "Feb.", "Mar.", "Apr.", "May.",
+            "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."
+        )
+
+        var monthNum = calendar.get(Calendar.MONTH)
+        var yearNum = calendar.get(Calendar.YEAR)
+
+        binding.tvMonth.text = getString(R.string.calendar_month_year, monthList[monthNum], yearNum.toString())
+
+        checkOpportunityToChangeMonth(monthList)
+        adapterListSubmit(adapter, monthNum, yearNum)
+
+        val month = if (monthNum < 10) "0${monthNum + 1}" else "${monthNum + 1}"
+        fillCells((month), yearNum)
+
+        binding.monthBack.setOnClickListener {
+            monthBackClickListener(monthNum, yearNum, monthList, adapter)
+        }
+
+        binding.monthForward.setOnClickListener {
+            monthForwardClickListener(monthNum, yearNum, monthList, adapter)
+        }
+    }
+
+    private fun monthBackClickListener(monthNum: Int, yearNum: Int, monthList: List<String>, adapter: TransactionAdapter) {
+        var monthNum1 = monthNum
+        var yearNum1 = yearNum
+        lifecycleScope.launch {
+            if (monthNum1 == 0) {
+                monthNum1 = 11
+                yearNum1 -= 1
+            } else monthNum1 -= 1
+
+            binding.tvMonth.text =
+                getString(R.string.calendar_month_year, monthList[monthNum1], yearNum1.toString())
+
+            adapterListSubmit(adapter, monthNum1, yearNum1)
+
+            val month = if (monthNum1 < 10) "0${monthNum1 + 1}" else "${monthNum1 + 1}"
+            fillCells(month, yearNum1)
+            checkOpportunityToChangeMonth(monthList)
+        }
+    }
+
+    private fun monthForwardClickListener(monthNum: Int, yearNum: Int, monthList: List<String>, adapter: TransactionAdapter) {
+        var monthNum1 = monthNum
+        var yearNum1 = yearNum
+        lifecycleScope.launch {
+            if (monthNum1 == 11) {
+                monthNum1 = 0
+                yearNum1 += 1
+            } else monthNum1 += 1
+
+            binding.tvMonth.text =
+                getString(R.string.calendar_month_year, monthList[monthNum1], yearNum1.toString())
+            adapterListSubmit(adapter, monthNum1, yearNum1)
+
+            val month = if (monthNum1 < 10) "0${monthNum1 + 1}" else "${monthNum1 + 1}"
+            fillCells(month, yearNum1)
+            checkOpportunityToChangeMonth(monthList)
+        }
+    }
+
+    private fun checkOpportunityToChangeMonth(monthList: List<String>) {
+        binding.apply {
+            if (tvMonth.text == "${monthList[calendar.get(Calendar.MONTH)]} ${calendar.get(Calendar.YEAR)}") {
+                monthForward.isEnabled = false
+                monthForward.alpha = 0.25f
+            } else {
+                monthForward.isEnabled = true
+                monthForward.alpha = 1f
+            }
+        }
+    }
+
+    private suspend fun adapterListSubmit(adapter: TransactionAdapter, monthNum: Int, yearNum: Int) {
+        val date = if ((monthNum + 1) < 10) "0${(monthNum + 1)}" else "${(monthNum + 1)}"
+        val transactionList = viewModel.getTransactionsByMonth(date, yearNum.toString())
+        adapter.submitList(transactionList)
     }
 
     private fun searchInputTextListener(adapter: TransactionAdapter) {
@@ -63,7 +146,7 @@ class TransactionFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 lifecycleScope.launch {
-                    if (newText != null)
+                    if (newText != "")
                         adapter.submitList(viewModel.searchTransaction("%${newText}%"))
                 }
                 return true
@@ -80,9 +163,8 @@ class TransactionFragment : Fragment() {
         })
     }
 
-    private fun updateAdapterList(adapter: TransactionAdapter, it: List<TransactionEntity>) {
-        adapter.submitList(it)
-        if (it.isEmpty()) {
+    private fun checkDataExist(list: List<TransactionEntity>) {
+        if (list.isEmpty()) {
             binding.txtNoDataInfo.visibility = View.VISIBLE
             binding.hintArrow.visibility = View.VISIBLE
         } else {
@@ -91,10 +173,11 @@ class TransactionFragment : Fragment() {
         }
     }
 
-    private fun fillCells() {
+    private fun fillCells(month: String, year: Int) {
         lifecycleScope.launch {
-            val income = viewModel.getSumByType(getString(R.string.income_adding))
-            val spend = viewModel.getSumByType(getString(R.string.spent_adding))
+
+            val income = viewModel.getSumByType(getString(R.string.income_adding), month, year.toString())
+            val spend = viewModel.getSumByType(getString(R.string.spent_adding), month, year.toString())
             val balance = income - spend
 
             binding.txtIncome.text = getString(R.string.income_cell, getString(R.string.income_adding), income.delimiterFormat())

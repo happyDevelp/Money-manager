@@ -20,16 +20,18 @@ class TransactionViewModel(private val repository: DatabaseRepository) : ViewMod
 
     val navigationStatus = _navigationStatus
 
-
-    suspend fun getSumByType(type: String): Int {
-        return withContext(Dispatchers.IO) {repository.getSumByType(type)}
+    suspend fun getSumByType(type: String, month: String, year: String): Int {
+        return withContext(Dispatchers.IO) {repository.getMonthSumByType(type, month, year)}
     }
 
-/*
-    val searchTransactions: LiveData<List<TransactionEntity>> = repository
-*/
     suspend fun searchTransaction(query: String): List<TransactionEntity> {
         return withContext(Dispatchers.IO) { repository.searchTransaction(query) }
+    }
+
+    suspend fun getTransactionsByMonth(month: String, yearNum: String): List<TransactionEntity> {
+        return withContext(Dispatchers.IO) {
+            repository.getTransactionsByMonth(month, yearNum)
+        }
     }
 
     fun navigationToAdding() { _navigationStatus.value = true }
