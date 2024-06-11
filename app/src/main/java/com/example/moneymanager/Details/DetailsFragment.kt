@@ -49,7 +49,7 @@ class DetailsFragment : Fragment() {
         }
 
         binding.backArrow.setOnClickListener {
-            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToTransactionFragment())
+            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToFavouritesFragment())
         }
 
         //val dialogg = DeleteDialogFragment(requireContext())
