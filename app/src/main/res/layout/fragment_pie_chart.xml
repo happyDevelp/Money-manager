@@ -89,7 +89,7 @@
         android:background="@drawable/thin_outline"
         android:padding="12dp"
         android:gravity="center"
-
+        android:layout_marginHorizontal="12dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

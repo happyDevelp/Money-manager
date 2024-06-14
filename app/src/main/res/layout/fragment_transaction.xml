@@ -94,29 +94,90 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstLinearLayout">
 
-        <TextView
-            android:id="@+id/txt_income"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            tools:text="Дохід\n0,00"
-            android:textAlignment="center" />
+            android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/txt_spend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Витрати\n0,00"
-            android:textAlignment="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
 
-        <TextView
-            android:id="@+id/txt_balance"
+                android:fontFamily="@font/balsamiq_sans"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:text="@string/income_adding" />
+
+            <TextView
+                android:id="@+id/txt_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0,00"
+                android:textColor="#1E3BC3"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:text="Баланс\n0,00"
-            android:textAlignment="center" />
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/balsamiq_sans"
+
+                android:text="@string/spent_adding"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/txt_spend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="0,00"
+                android:textColor="#C31E1E"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/balance"
+                android:fontFamily="@font/balsamiq_sans"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/txt_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="0,00"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
