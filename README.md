@@ -55,7 +55,7 @@ Smooth Transitions: Enjoy smooth animations between screen transitions.
 
 
 *Diagrarm screen*
-https://github.com/happyDevelp/Money-manager/tree/master
+
 <img src="https://github.com/happyDevelp/myQuiz/blob/master/app/src/androidTest/Readme_screenshots/diagram_transaction.jpg" width="350" height="780">
 
 
